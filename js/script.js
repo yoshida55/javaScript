@@ -297,3 +297,61 @@ console.log("ランダムな数値：" + arrayRandomNumber);
 console.log("1から10までのランダムな数値の合計は" + sumRandomNumber + "です");
 
 //----------------------------------------------
+// ==========================================
+// ### Page 501 practice 04 配列 (配列課題 ③)
+// 0から9までのランダムな数値を10個生成して出力。
+// ただし、重複してはだめ。
+// 出力例）0 5 3 7 2 9 8 6 1 4
+// ==========================================
+
+let uniqueRandomNumbers = [];
+
+while (uniqueRandomNumbers.length < 10) {
+  let randomNum = Math.floor(Math.random() * 10);
+  // 重複していない場合のみ配列に追加
+  if (!uniqueRandomNumbers.includes(randomNum)) {
+    uniqueRandomNumbers.push(randomNum);
+  } else {
+    console.log("重複した数字：" + randomNum + "はスキップします");
+  }
+}
+
+console.log("重複しないランダムな数値：" + uniqueRandomNumbers);
+
+//----------------------------------------------
+// ==========================================
+// ➃の課題で出力した10個のランダムな数値を、昇順に並び替えてみよう。
+// 出力例）0 5 3 7 2 9 8 6 1 4
+// 0 1 2 3 4 5 6 7 8 9
+// ==========================================
+
+// 昇順に並び替え（while loopを使用して）
+let sortedNumbers = [];
+while (uniqueRandomNumbers.length > 0) {
+  // 最小値を見つける
+  let min = Math.min(...uniqueRandomNumbers);
+  // 最小値を新しい配列に追加
+  sortedNumbers.push(min);
+  // 元の配列から最小値を削除
+  uniqueRandomNumbers.splice(uniqueRandomNumbers.indexOf(min), 1);
+}
+console.log("昇順に並び替えたランダムな数値：" + sortedNumbers);
+
+//----------------------------------------------
+// ==========================================
+// ➄の課題で出力した10個のランダムな数値を、降順に並び替えてみよう。
+// 出力例）0 5 3 7 2 9 8 6 1 4
+// 0 1 2 3 4 5 6 7 8 9
+// ==========================================
+
+// 降順に並び替え（while loopを使用して）
+let descSortedNumbers = [];
+while (sortedNumbers.length > 0) {
+  // 最大値を見つける
+  let max = Math.max(...sortedNumbers);
+  // 最大値を新しい配列に追加
+  descSortedNumbers.push(max);
+  // 元の配列から最大値を削除
+  sortedNumbers.splice(sortedNumbers.indexOf(max), 1);
+}
+console.log("降順に並び替えたランダムな数値：" + descSortedNumbers);
