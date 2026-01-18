@@ -223,11 +223,11 @@ console.log("腱鞘炎になった日数は" + Date + "日です");
 // 配列を定義する
 let array = [];
 
-for (let j = 0; j < 9; j++) {
-  array[j] = j + 1;
+for (let j = 0; j < 10; j++) {
+  array[j] = j;
 }
 
-console.log(array);
+console.log("0から9までの連番の配列：" + array);
 
 // ==========================================
 // ### Page 50: practice 04 配列 (配列課題 ②)
@@ -355,3 +355,22 @@ while (sortedNumbers.length > 0) {
   sortedNumbers.splice(sortedNumbers.indexOf(max), 1);
 }
 console.log("降順に並び替えたランダムな数値：" + descSortedNumbers);
+
+//----------------------------------------------
+// 名前を渡すとさんを付けて返す関数
+function addSan(name) {
+  return name + "さん";
+}
+
+console.log(addSan("田中"));
+
+// 数値の配列を渡すと、配列の数値をすべて合計した数値を返す関数。
+function sumArray(numbers) {
+  let sum = 0;
+  for (let d = 0; d < numbers.length; d++) {
+    sum += numbers[d];
+  }
+  return sum;
+}
+
+console.log(sumArray([1, 2, 3, 4, 5]));
