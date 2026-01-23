@@ -170,7 +170,7 @@ while (true) {
   if (tanakaKushami == 1 && yamadaKushami == 1) {
     break;
   }
-  count = count + 1;
+  count++;
 }
 
 console.log("くしゃみが出ました！");
@@ -187,25 +187,28 @@ console.log("繰り返した回数は" + count + "回です");
 //夜に抽選を行う。水を飲まない場合、普通だったら10分の1で腱鞘炎になる。
 //朝の抽選で3分の1で水を飲んでると、30分の1で検証員になる。
 
+console.log("ーーーーーーーーーーーー腱鞘炎テスト開始ーーーーーーーーーーーー");
 // 腱鞘炎になる日数。
 let Date = 0;
 //　水が飲めた日。（もし１なら水が飲めた）
-let waterDay;
-let kenshouin;
+let waterDayNum;
+let kenshouinNum;
 
 while (true) {
   Date = Date + 1;
 
-  let waterDay = Math.floor(Math.random() * 3) + 1;
+
+  waterDayNum = Math.floor(Math.random() * 3) + 1;
 
   // 水が飲めた場合(つまり、1を飲めた場合とする)
-  if (waterDay == 1) {
-    kenshouen = Math.floor(Math.random() * 30) + 1;
+  if (waterDayNum == 1) {
+    kenshouinNum = Math.floor(Math.random() * 30) + 1;
   } else {
-    kenshouen = Math.floor(Math.random() * 10) + 1;
+    kenshouinNum = Math.floor(Math.random() * 10) + 1;
   }
 
-  if (kenshouen == 1) {
+  // 腱鞘炎になった場合(つまり、1を腱鞘炎になった場合とする)
+  if (kenshouinNum == 1) {
     break;
   }
 }
