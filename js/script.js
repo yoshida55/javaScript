@@ -197,7 +197,6 @@ let kenshouinNum;
 while (true) {
   Date = Date + 1;
 
-
   waterDayNum = Math.floor(Math.random() * 3) + 1;
 
   // 水が飲めた場合(つまり、1を飲めた場合とする)
@@ -307,6 +306,11 @@ console.log("1から10までのランダムな数値の合計は" + sumRandomNum
 // 出力例）0 5 3 7 2 9 8 6 1 4
 // ==========================================
 
+console.log(
+  "ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー",
+);
+
+// 　重複していない配列のはこ
 let uniqueRandomNumbers = [];
 
 while (uniqueRandomNumbers.length < 10) {
@@ -314,8 +318,9 @@ while (uniqueRandomNumbers.length < 10) {
   // 重複していない場合のみ配列に追加
   if (!uniqueRandomNumbers.includes(randomNum)) {
     uniqueRandomNumbers.push(randomNum);
+    console.log("いま配列にある数字は：" + uniqueRandomNumbers);
   } else {
-    console.log("重複した数字：" + randomNum + "はスキップします");
+    console.log("そのため、重複した数字：" + randomNum + "はスキップします");
   }
 }
 
@@ -323,9 +328,10 @@ console.log("重複しないランダムな数値：" + uniqueRandomNumbers);
 
 //----------------------------------------------
 // ==========================================
-// ➃の課題で出力した10個のランダムな数値を、昇順に並び替えてみよう。
+// ### Page 51 practice 04 配列 (配列課題 ３)
+// ➃の課題で出力した10個のランダムな数値を、昇順に並び替えてみよう３
 // 出力例）0 5 3 7 2 9 8 6 1 4
-// 0 1 2 3 4 5 6 7 8 9
+// 0 1 2 3 4 5 ３ 7 8 9
 // ==========================================
 
 // 昇順に並び替え（while loopを使用して）
@@ -342,24 +348,41 @@ console.log("昇順に並び替えたランダムな数値：" + sortedNumbers);
 
 //----------------------------------------------
 // ==========================================
-// ➄の課題で出力した10個のランダムな数値を、降順に並び替えてみよう。
+// 5の課題で出力した10個のランダムな数値を、降順に並び替えてみよう。
 // 出力例）0 5 3 7 2 9 8 6 1 4
 // 0 1 2 3 4 5 6 7 8 9
 // ==========================================
 
-// 降順に並び替え（while loopを使用して）
-let descSortedNumbers = [];
-while (sortedNumbers.length > 0) {
-  // 最大値を見つける
-  let max = Math.max(...sortedNumbers);
-  // 最大値を新しい配列に追加
-  descSortedNumbers.push(max);
-  // 元の配列から最大値を削除
-  sortedNumbers.splice(sortedNumbers.indexOf(max), 1);
-}
-console.log("降順に並び替えたランダムな数値：" + descSortedNumbers);
+// 課題番号51P_6
+console.log(
+  "ーーーーーーーーーーーーーーーーー上記で出力した昇順の配列を降順にする_51P_6 " +
+    "\n" +
+    "ーーーーーーーーーーーーーーーーー-",
+);
 
+// 降順に並び替え（while loopを使用して）
+// sortedNumbersを再利用（昇順の配列）
+
+// 降順にする予定の配列
+let descendingNumbers = [];
+
+while (sortedNumbers.length > 0) {
+  tempMax = Math.max(...sortedNumbers);
+  descendingNumbers.push(tempMax);
+
+  sortedNumbers.splice(sortedNumbers.indexOf(tempMax), 1);
+}
+
+console.log("降順にならびかえたランダムな配列は" + descendingNumbers);
 //----------------------------------------------
+
+// 課題番号51P_6
+console.log(
+  "ーーーーーーーーーーーーーーーーーさんづけで返す_58P_1 " +
+    "\n" +
+    "ーーーーーーーーーーーーーーーーー-",
+);
+
 // 名前を渡すとさんを付けて返す関数
 function addSan(name) {
   return name + "さん";
@@ -367,13 +390,49 @@ function addSan(name) {
 
 console.log(addSan("田中"));
 
-// 数値の配列を渡すと、配列の数値をすべて合計した数値を返す関数。
-function sumArray(numbers) {
-  let sum = 0;
-  for (let d = 0; d < numbers.length; d++) {
-    sum += numbers[d];
+// 課題番号51P_6
+console.log(
+  "ーーーーーーーーーーーーーーーーー配列を引数にしたらで合計値を返す_58P_2 " +
+    "\n" +
+    "ーーーーーーーーーーーーーーーーー-",
+);
+
+function sumArray(calcNumbers) {
+  let total = 0;
+
+  for (let SumNum = 0; SumNum < calcNumbers.length; SumNum++) {
+    total += calcNumbers[SumNum];
   }
-  return sum;
+  return total;
 }
 
-console.log(sumArray([1, 2, 3, 4, 5]));
+console.log("配列の合計は" + sumArray([1, 2, 3, 4, 5, 15]));
+
+// 課題番号51P_6
+console.log(
+  "ーーーーーーーーーーーーーーー",
+  "\n" + "身長と体重を渡すとBMIを返す_58P_3 ",
+);
+
+// heightは身長、
+// weightはkgは体重
+
+function calculateBMI(height, weight) {
+  // 身長をCMからMに変換
+  let heightM = height * 0.01;
+  let BMI = weight / (heightM * heightM);
+  return BMI;
+}
+
+//BMIを計算して表示
+console.log("BMIは" + calculateBMI(170, 65));
+
+
+// 課題番号51P_4-------------------------------------------------------
+console.log(
+  "ーーーーーーーーーーーーーーーーー数値と配列を渡すと、昇順でソートして配列を返す " +
+    "\n" +
+    "ーーーーーーーーーーーーーーーーー-",
+);
+
+
