@@ -1,0 +1,12 @@
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: lightblue;
+  margin-bottom: 5rem;
+}
+
+.box_msg {
+  margin-top: 70px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}

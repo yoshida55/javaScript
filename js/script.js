@@ -526,3 +526,23 @@ console.log(
     "\n" +
     "ーーーーーーーーーーーーーーーーー-",
 );
+
+const colorChangeBtn = document.getElementById("colorChangeBtn");
+colorChangeBtn.addEventListener("click", function () {
+  const box = document.querySelector(".box");
+  box.style.backgroundColor = "red";
+});
+
+// 課題番号65P_2 -------------------------------------------------------
+console.log(
+  "ーーーーーーーーーーーーーーーーーボタンを押すと入力したカラーコードに色が変わる。" +
+    "\n" +
+    "ーーーーーーーーーーーーーーーーー-",
+);
+
+const colorChangeBtn2 = document.getElementById("applyColorBtn");
+colorChangeBtn2.addEventListener("click", function () {
+  const box = document.querySelector(".box");
+  const colorInput = document.getElementById("colorInput").value;
+  box.style.backgroundColor = colorInput;
+});
