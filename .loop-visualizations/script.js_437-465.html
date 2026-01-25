@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- CODE_HASH: 1ad49de2f8f1a0687a26720b29c8534b -->
+  <!-- SOURCE_FILE: script.js -->
+  <!-- START_LINE: 437 -->
+  <!-- END_LINE: 465 -->
+  <!-- LANGUAGE: javascript -->
+  <!-- VISUALIZATION_TYPE: loop -->
+  <!-- CREATED_AT: 2026-01-25T03:14:00.599Z -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>バブルソート可視化 - ループ処理</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Consolas', 'Monaco', monospace;
+      background: #1E1E1E;
+      color: #CCCCCC;
+      padding: 20px;
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    h1 { color: #4EC9B0; margin-bottom: 10px; font-size: 24px; }
+    .subtitle { color: #858585; margin-bottom: 20px; font-size: 14px; }
+
+    /* コード表示 */
+    .code-display {
+      background: #252526;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+    .code-keyword { color: #C586C0; }
+    .code-var { color: #9CDCFE; }
+    .code-number { color: #B5CEA8; }
+    .code-comment { color: #6A9955; }
+    .code-string { color: #CE9178; }
+    .code-function { color: #DCDCAA; }
+
+    /* コントロール */
+    .controls {
+      background: #2A2D2E;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .controls-top {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      align-items: center;
+    }
+    .btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-play { background: #4EC9B0; color: #1E1E1E; font-weight: 600; }
+    .btn-play:hover { background: #5dd9c0; }
+    .btn-play.playing { background: #C586C0; }
+    .btn-reset { background: #3E3E42; color: #CCCCCC; }
+    .btn-reset:hover { background: #4E4E52; }
+
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+    .speed-label { color: #858585; font-size: 12px; }
+
+    .progress-container { display: flex; align-items: center; gap: 15px; }
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: #3E3E42;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #4EC9B0;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    .progress-text { color: #4EC9B0; font-size: 14px; font-weight: 600; min-width: 120px; }
+
+    /* 配列表示 */
+    .arrays-container {
+      background: #252526;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+    .array-section { margin-bottom: 30px; }
+    .array-section:last-child { margin-bottom: 0; }
+    .array-title { color: #9CDCFE; font-size: 14px; margin-bottom: 15px; }
+    .array-wrapper { position: relative; padding-bottom: 90px; }
+    .array { display: flex; gap: 8px; position: relative; flex-wrap: wrap; }
+
+    .array-item {
+      width: 90px;
+      height: 95px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #3E3E42;
+      background: #2A2D2E;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .array-item:hover { border-color: #4EC9B0; }
+    .array-item.checking-target {
+      background: #264F78;
+      border: 3px solid #4EC9B0;
+      box-shadow: 0 0 15px rgba(78, 201, 176, 0.4);
+    }
+    .array-item.checking-compare {
+      background: #3E1F47;
+      border: 3px solid #C586C0;
+      box-shadow: 0 0 15px rgba(197, 134, 192, 0.4);
+    }
+    .array-item.swapping {
+      background: #4A2820;
+      border: 3px solid #CE9178;
+      box-shadow: 0 0 20px rgba(206, 145, 120, 0.6);
+      animation: pulse 0.5s;
+    }
+    .array-item.sorted {
+      background: #1E4620;
+      border: 2px solid #28A745;
+      opacity: 0.8;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .item-index { position: absolute; top: 3px; font-size: 9px; color: #858585; }
+    .item-value { font-size: 20px; font-weight: 600; color: #FFFFFF; }
+    .item-label { position: absolute; bottom: 3px; font-size: 8px; font-weight: 600; }
+    .item-label.target-label { color: #4EC9B0; }
+    .item-label.compare-label { color: #C586C0; }
+
+    /* SVG線 */
+    .connection-svg {
+      position: absolute;
+      top: 95px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      pointer-events: none;
+    }
+    .connection-label {
+      position: absolute;
+      top: 130px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+    .connection-label.checking { color: #858585; background: #2A2D2E; }
+    .connection-label.swapping { color: #CE9178; background: #4A2820; }
+
+    /* 現在の状態 */
+    .current-state {
+      background: #2A2D2E;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .state-title { color: #9CDCFE; font-size: 14px; margin-bottom: 15px; }
+    .state-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .state-item { background: #1E1E1E; border-radius: 6px; padding: 15px; }
+    .state-label { color: #858585; font-size: 11px; margin-bottom: 8px; }
+    .state-value { font-size: 24px; font-weight: 600; }
+    .state-value.target-value { color: #4EC9B0; }
+    .state-value.compare-value { color: #C586C0; }
+
+    .comparison-box {
+      background: #1E1E1E;
+      border-radius: 6px;
+      padding: 15px;
+      grid-column: span 3;
+    }
+    .comparison-text { font-size: 13px; color: #CCCCCC; margin-bottom: 8px; }
+    .comparison-result { font-size: 16px; font-weight: 600; }
+    .comparison-result.swapping { color: #CE9178; }
+    .comparison-result.no-swap { color: #858585; }
+
+    /* 結果表示 */
+    .result-display {
+      background: #1E1E1E;
+      border-radius: 6px;
+      padding: 15px;
+    }
+    .result-text { font-size: 13px; color: #CCCCCC; margin-bottom: 10px; }
+    .result-array {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .result-value {
+      background: #1E4620;
+      border: 2px solid #28A745;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #28A745;
+    }
+    .empty-state { color: #858585; font-size: 12px; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>バブルソート可視化</h1>
+    <p class="subtitle">配列をステップごとにソートする処理を視覚化</p>
+
+    <!-- コード表示 -->
+    <div class="code-display">
+<span class="code-keyword">function</span> <span class="code-function">lineUpNum</span>(originalNumbers) {<br>
+&nbsp;&nbsp;<span class="code-keyword">let</span> <span class="code-var">length</span> = originalNumbers.<span class="code-var">length</span>;<br>
+<br>
+&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">let</span> <span class="code-var">target</span> = <span class="code-number">0</span>; target &lt; length; target++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">let</span> <span class="code-var">compare</span> = target + <span class="code-number">1</span>; compare &lt; length; compare++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (originalNumbers[target] &gt; originalNumbers[compare]) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// 入れ替え作業</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">let</span> <span class="code-var">storage</span> = originalNumbers[target];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;originalNumbers[target] = originalNumbers[compare];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;originalNumbers[compare] = storage;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+}<br>
+    </div>
+
+    <!-- コントロール -->
+    <div class="controls">
+      <div class="controls-top">
+        <button class="btn btn-play" id="playBtn">
+          <span id="playIcon">▶</span>
+          <span id="playText">自動再生</span>
+        </button>
+        <button class="btn btn-reset" id="resetBtn">⏮ 最初に戻る</button>
+        <div class="speed-control">
+          <span class="speed-label">速度:</span>
+          <input type="range" id="speedSlider" min="500" max="2000" value="1000" step="100">
+          <span class="speed-label" id="speedValue">1.0秒</span>
+        </div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">ステップ 0/18</div>
+      </div>
+    </div>
+
+    <!-- 現在の状態 -->
+    <div class="current-state">
+      <div class="state-title">現在の状態:</div>
+      <div class="state-grid">
+        <div class="state-item">
+          <div class="state-label">外側ループ (target)</div>
+          <div class="state-value target-value" id="currentTarget">-</div>
+        </div>
+        <div class="state-item">
+          <div class="state-label">内側ループ (compare)</div>
+          <div class="state-value compare-value" id="currentCompare">-</div>
+        </div>
+        <div class="state-item">
+          <div class="state-label">入れ替え回数</div>
+          <div class="state-value" id="swapCount">0</div>
+        </div>
+        <div class="comparison-box">
+          <div class="comparison-text" id="comparisonText">開始前</div>
+          <div class="comparison-result" id="comparisonResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 配列表示 -->
+    <div class="arrays-container">
+      <div class="array-section">
+        <div class="array-title">配列 (originalNumbers):</div>
+        <div class="array-wrapper">
+          <div class="array" id="arrayDisplay"></div>
+          <svg class="connection-svg" id="connectionSvg"></svg>
+          <div class="connection-label" id="connectionLabel"></div>
+        </div>
+      </div>
+      <div class="array-section">
+        <div class="array-title">ソート完了後の結果:</div>
+        <div id="resultsContainer">
+          <div class="empty-state">ソート処理中...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 配列データ
+    const originalArray = [5, 2, 8, 1, 4, 6];
+    
+    // ステップデータ生成
+    function generateSteps() {
+      const steps = [];
+      const arr = [...originalArray];
+      const length = arr.length;
+      let swapCount = 0;
+
+      steps.push({
+        type: 'start',
+        array: [...arr],
+        target: null,
+        compare: null,
+        message: '開始前',
+        swapCount: 0
+      });
+
+      for (let target = 0; target < length; target++) {
+        for (let compare = target + 1; compare < length; compare++) {
+          steps.push({
+            type: 'compare',
+            array: [...arr],
+            target: target,
+            compare: compare,
+            message: `arr[${target}] (${arr[target]}) と arr[${compare}] (${arr[compare]}) を比較`,
+            comparing: true,
+            swapCount: swapCount
+          });
+
+          if (arr[target] > arr[compare]) {
+            let storage = arr[target];
+            arr[target] = arr[compare];
+            arr[compare] = storage;
+            swapCount++;
+
+            steps.push({
+              type: 'swap',
+              array: [...arr],
+              target: target,
+              compare: compare,
+              message: `${storage} > ${arr[compare]} なので入れ替え！`,
+              swapping: true,
+              swapCount: swapCount
+            });
+          }
+        }
+
+        steps.push({
+          type: 'sorted',
+          array: [...arr],
+          target: target,
+          compare: null,
+          message: `位置 ${target} が確定`,
+          swapCount: swapCount
+        });
+      }
+
+      steps.push({
+        type: 'complete',
+        array: [...arr],
+        target: null,
+        compare: null,
+        message: 'ソート完了！',
+        swapCount: swapCount
+      });
+
+      return steps;
+    }
+
+    const steps = generateSteps();
+    let currentStep = 0;
+    let isPlaying = false;
+    let playInterval = null;
+    let speed = 1000;
+
+    const playBtn = document.getElementById('playBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const speedSlider = document.getElementById('speedSlider');
+    const speedValue = document.getElementById('speedValue');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const arrayDisplay = document.getElementById('arrayDisplay');
+    const connectionSvg = document.getElementById('connectionSvg');
+    const connectionLabel = document.getElementById('connectionLabel');
+    const currentTarget = document.getElementById('currentTarget');
+    const currentCompare = document.getElementById('currentCompare');
+    const swapCountEl = document.getElementById('swapCount');
+    const comparisonText = document.getElementById('comparisonText');
+    const comparisonResult = document.getElementById('comparisonResult');
+    const resultsContainer = document.getElementById('resultsContainer');
+
+    function renderStep(stepIndex) {
+      const step = steps[stepIndex];
+      
+      // 配列表示
+      arrayDisplay.innerHTML = '';
+      step.array.forEach((value, index) => {
+        const item = document.createElement('div');
+        item.className = 'array-item';
+        
+        if (step.type === 'compare' || step.type === 'swap') {
+          if (index === step.target) {
+            item.classList.add('checking-target');
+          } else if (index === step.compare) {
+            item.classList.add('checking-compare');
+          }
+          
+          if (step.swapping && (index === step.target || index === step.compare)) {
+            item.classList.add('swapping');
+          }
+        }
+
+        if (step.type === 'sorted' && index <= step.target) {
+          item.classList.add('sorted');
+        }
+
+        if (step.type === 'complete') {
+          item.classList.add('sorted');
+        }
+        
+        item.innerHTML = `
+          <div class="item-index">index: ${index}</div>
+          <div class="item-value">${value}</div>
+          ${index === step.target ? '<div class="item-label target-label">target</div>' : ''}
+          ${index === step.compare ? '<div class="item-label compare-label">compare</div>' : ''}
+        `;
+        
+        arrayDisplay.appendChild(item);
+      });
+
+      // 接続線
+      connectionSvg.innerHTML = '';
+      connectionLabel.innerHTML = '';
+      connectionLabel.style.display = 'none';
+
+      if ((step.type === 'compare' || step.type === 'swap') && step.target !== null && step.compare !== null) {
+        const x1 = step.target * 98 + 45;
+        const x2 = step.compare * 98 + 45;
+        const y1 = 0;
+        const y2 = 50;
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const midY = 25;
+        const d = `M ${x1} ${y1} Q ${x1} ${midY}, ${(x1 + x2) / 2} ${midY} Q ${x2} ${midY}, ${x2} ${y2}`;
+        
+        path.setAttribute('d', d);
+        path.setAttribute('stroke', step.swapping ? '#CE9178' : '#505050');
+        path.setAttribute('stroke-width', step.swapping ? '3' : '2');
+        path.setAttribute('fill', 'none');
+        
+        connectionSvg.appendChild(path);
+
+        connectionLabel.textContent = step.swapping ? '入れ替え！' : '比較中';
+        connectionLabel.className = 'connection-label ' + (step.swapping ? 'swapping' : 'checking');
+        connectionLabel.style.display = 'block';
+        connectionLabel.style.left = ((x1 + x2) / 2) + 'px';
+      }
+
+      // 状態表示
+      currentTarget.textContent = step.target !== null ? step.target : '-';
+      currentCompare.textContent = step.compare !== null ? step.compare : '-';
+      swapCountEl.textContent = step.swapCount;
+      
+      comparisonText.textContent = step.message;
+      
+      if (step.type === 'swap') {
+        comparisonResult.textContent = '入れ替え実行';
+        comparisonResult.className = 'comparison-result swapping';
+      } else if (step.type === 'compare') {
+        comparisonResult.textContent = '比較中...';
+        comparisonResult.className = 'comparison-result no-swap';
+      } else if (step.type === 'complete') {
+        comparisonResult.textContent = '✓ 完了';
+        comparisonResult.className = 'comparison-result swapping';
+      } else {
+        comparisonResult.textContent = '';
+      }
+
+      // 結果表示
+      if (step.type === 'complete') {
+        resultsContainer.innerHTML = `
+          <div class="result-display">
+            <div class="result-text">ソート完了: [${step.array.join(', ')}]</div>
+            <div class="result-array">
+              ${step.array.map(v => `<div class="result-value">${v}</div>`).join('')}
+            </div>
+          </div>
+        `;
+      } else {
+        resultsContainer.innerHTML = '<div class="empty-state">ソート処理中...</div>';
+      }
+
+      // プログレスバー
+      const progress = (stepIndex / (steps.length - 1)) * 100;
+      progressFill.style.width = progress + '%';
+      progressText.textContent = `ステップ ${stepIndex}/${steps.length - 1}`;
+    }
+
+    function play() {
+      if (currentStep >= steps.length - 1) {
+        currentStep = 0;
+      }
+      
+      isPlaying = true;
+      playBtn.classList.add('playing');
+      document.getElementById('playIcon').textContent = '⏸';
+      document.getElementById('playText').textContent = '一時停止';
+      
+      playInterval = setInterval(() => {
+        currentStep++;
+        renderStep(currentStep);
+        
+        if (currentStep >= steps.length - 1) {
+          pause();
+        }
+      }, speed);
+    }
+
+    function pause() {
+      isPlaying = false;
+      playBtn.classList.remove('playing');
+      document.getElementById('playIcon').textContent = '▶';
+      document.getElementById('playText').textContent = '自動再生';
+      
+      if (playInterval) {
+        clearInterval(playInterval);
+        playInterval = null;
+      }
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        pause();
+      } else {
+        play();
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      pause();
+      currentStep = 0;
+      renderStep(currentStep);
+    });
+
+    speedSlider.addEventListener('input', (e) => {
+      speed = parseInt(e.target.value);
+      speedValue.textContent = (speed / 1000).toFixed(1) + '秒';
+      
+      if (isPlaying) {
+        pause();
+        play();
+      }
+    });
+
+    progressBar.addEventListener('click', (e) => {
+      const rect = progressBar.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const percent = x / rect.width;
+      const newStep = Math.floor(percent * (steps.length - 1));
+      
+      pause();
+      currentStep = newStep;
+      renderStep(currentStep);
+    });
+
+    // 初期表示
+    renderStep(0);
+  </script>
+</body>
+</html>

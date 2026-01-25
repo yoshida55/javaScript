@@ -9,19 +9,16 @@ let lineUPnumbers = [];
 
 lineUpNum(originalNumbers);
 
-
-//　もとの番号をうけとって
+//　もとの番号をうけとって（7.5.9.3）
 function lineUpNum(originalNumbers) {
-
-  // もとの番号の長さを取得する（元の昇順する目的の配列）
+  // もとの番号の長さを取得する（元の昇順する目的の配列）（4つ）
   let length = originalNumbers.length;
 
-  // target: 確定させたい位置
+  // target: 確定させたい位置（4つまで、targetを）
   for (let target = 0; target < length; target++) {
-    
     // compare: 比較相手（ターゲットの次の数字から最後まで）
     for (let compare = target + 1; compare < length; compare++) {
-      
+      // originalNumbers(もとの)、
       if (originalNumbers[target] > originalNumbers[compare]) {
         // 入れ替え作業
         let storage = originalNumbers[target];
@@ -31,6 +28,5 @@ function lineUpNum(originalNumbers) {
     }
   }
 }
-
 
 console.log("配列昇順結果");

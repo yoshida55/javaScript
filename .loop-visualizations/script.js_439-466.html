@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- CODE_HASH: b6d3d883908d8fc3d96ea7d0062e2341 -->
+  <!-- SOURCE_FILE: script.js -->
+  <!-- START_LINE: 439 -->
+  <!-- END_LINE: 466 -->
+  <!-- LANGUAGE: javascript -->
+  <!-- VISUALIZATION_TYPE: loop -->
+  <!-- CREATED_AT: 2026-01-25T03:20:05.074Z -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>選択ソート可視化</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Consolas', 'Monaco', monospace;
+      background: #1E1E1E;
+      color: #CCCCCC;
+      padding: 20px;
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    h1 { color: #4EC9B0; margin-bottom: 10px; font-size: 24px; }
+    .subtitle { color: #858585; margin-bottom: 20px; font-size: 14px; }
+
+    .code-display {
+      background: #252526;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+    .code-keyword { color: #C586C0; }
+    .code-var { color: #9CDCFE; }
+    .code-number { color: #B5CEA8; }
+    .code-comment { color: #6A9955; }
+
+    .controls {
+      background: #2A2D2E;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .controls-top {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      align-items: center;
+    }
+    .btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-play { background: #4EC9B0; color: #1E1E1E; font-weight: 600; }
+    .btn-play:hover { background: #5dd9c0; }
+    .btn-play.playing { background: #C586C0; }
+    .btn-reset { background: #3E3E42; color: #CCCCCC; }
+    .btn-reset:hover { background: #4E4E52; }
+
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+    .speed-label { color: #858585; font-size: 12px; }
+
+    .progress-container { display: flex; align-items: center; gap: 15px; }
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: #3E3E42;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #4EC9B0;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    .progress-text { color: #4EC9B0; font-size: 14px; font-weight: 600; min-width: 100px; }
+
+    .arrays-container {
+      background: #252526;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+    .array-section { margin-bottom: 30px; }
+    .array-section:last-child { margin-bottom: 0; }
+    .array-title { color: #9CDCFE; font-size: 14px; margin-bottom: 15px; }
+    .array-wrapper { position: relative; padding-bottom: 90px; }
+    .array { display: flex; gap: 8px; position: relative; flex-wrap: wrap; }
+
+    .array-item {
+      width: 90px;
+      height: 95px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #3E3E42;
+      background: #2A2D2E;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .array-item:hover { border-color: #4EC9B0; }
+    .array-item.checking-target {
+      background: #264F78;
+      border: 3px solid #4EC9B0;
+      box-shadow: 0 0 15px rgba(78, 201, 176, 0.4);
+    }
+    .array-item.checking-compare {
+      background: #3E1F47;
+      border: 3px solid #C586C0;
+      box-shadow: 0 0 15px rgba(197, 134, 192, 0.4);
+    }
+    .array-item.swap {
+      background: #4A2820;
+      border: 3px solid #CE9178;
+      box-shadow: 0 0 20px rgba(206, 145, 120, 0.6);
+      animation: pulse 0.5s;
+    }
+    .array-item.sorted {
+      background: #1E4620;
+      border: 2px solid #28A745;
+      opacity: 0.7;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .item-index { position: absolute; top: 3px; font-size: 9px; color: #858585; }
+    .item-value { font-size: 20px; font-weight: 600; color: #FFFFFF; }
+    .item-label { position: absolute; bottom: 3px; font-size: 8px; font-weight: 600; }
+    .item-label.target-label { color: #4EC9B0; }
+    .item-label.compare-label { color: #C586C0; }
+
+    .connection-svg {
+      position: absolute;
+      top: 95px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      pointer-events: none;
+    }
+    .connection-label {
+      position: absolute;
+      top: 130px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+    .connection-label.checking { color: #858585; background: #2A2D2E; }
+    .connection-label.swap { color: #CE9178; background: #4A2820; }
+
+    .current-state {
+      background: #2A2D2E;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .state-title { color: #9CDCFE; font-size: 14px; margin-bottom: 15px; }
+    .state-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .state-item { background: #1E1E1E; border-radius: 6px; padding: 15px; }
+    .state-label { color: #858585; font-size: 11px; margin-bottom: 8px; }
+    .state-value { font-size: 24px; font-weight: 600; }
+    .state-value.target-value { color: #4EC9B0; }
+    .state-value.compare-value { color: #C586C0; }
+
+    .comparison-box {
+      background: #1E1E1E;
+      border-radius: 6px;
+      padding: 15px;
+      grid-column: span 3;
+    }
+    .comparison-text { font-size: 13px; color: #CCCCCC; margin-bottom: 8px; }
+    .comparison-result { font-size: 16px; font-weight: 600; }
+    .comparison-result.swap { color: #CE9178; }
+    .comparison-result.no-swap { color: #858585; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>選択ソート可視化</h1>
+    <p class="subtitle">配列を昇順にソートする処理をステップごとに表示</p>
+
+    <div class="code-display">
+<span class="code-keyword">for</span> (<span class="code-keyword">let</span> <span class="code-var">target</span> = <span class="code-number">0</span>; <span class="code-var">target</span> &lt; <span class="code-var">length</span>; <span class="code-var">target</span>++) {<br>
+&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">let</span> <span class="code-var">compare</span> = <span class="code-var">target</span> + <span class="code-number">1</span>; <span class="code-var">compare</span> &lt; <span class="code-var">length</span>; <span class="code-var">compare</span>++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (<span class="code-var">originalNumbers</span>[<span class="code-var">target</span>] &gt; <span class="code-var">originalNumbers</span>[<span class="code-var">compare</span>]) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// 入れ替え作業</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">let</span> <span class="code-var">storage</span> = <span class="code-var">originalNumbers</span>[<span class="code-var">target</span>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-var">originalNumbers</span>[<span class="code-var">target</span>] = <span class="code-var">originalNumbers</span>[<span class="code-var">compare</span>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-var">originalNumbers</span>[<span class="code-var">compare</span>] = <span class="code-var">storage</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+}<br>
+    </div>
+
+    <div class="controls">
+      <div class="controls-top">
+        <button class="btn btn-play" id="playBtn">
+          <span id="playIcon">▶</span>
+          <span id="playText">自動再生</span>
+        </button>
+        <button class="btn btn-reset" id="resetBtn">⏮ 最初に戻る</button>
+        <div class="speed-control">
+          <span class="speed-label">速度:</span>
+          <input type="range" id="speedSlider" min="500" max="2000" value="1000" step="100">
+          <span class="speed-label" id="speedValue">1.0秒</span>
+        </div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">ステップ 0/15</div>
+      </div>
+    </div>
+
+    <div class="current-state">
+      <div class="state-title">現在の状態:</div>
+      <div class="state-grid">
+        <div class="state-item">
+          <div class="state-label">外側ループ (target)</div>
+          <div class="state-value target-value" id="currentTarget">-</div>
+        </div>
+        <div class="state-item">
+          <div class="state-label">内側ループ (compare)</div>
+          <div class="state-value compare-value" id="currentCompare">-</div>
+        </div>
+        <div class="state-item">
+          <div class="state-label">入れ替え回数</div>
+          <div class="state-value" id="swapCount">0</div>
+        </div>
+        <div class="comparison-box">
+          <div class="comparison-text" id="comparisonText">開始前</div>
+          <div class="comparison-result" id="comparisonResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrays-container">
+      <div class="array-section">
+        <div class="array-title">配列 (originalNumbers):</div>
+        <div class="array-wrapper">
+          <div class="array" id="arrayDisplay"></div>
+          <svg class="connection-svg" id="connectionSvg"></svg>
+          <div class="connection-label" id="connectionLabel" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const originalArray = [3, 1, 4, 5, 2];
+    
+    let steps = [];
+    
+    function generateSteps() {
+      steps = [];
+      let arr = [...originalArray];
+      let swaps = 0;
+      const length = arr.length;
+      
+      steps.push({
+        array: [...arr],
+        target: null,
+        compare: null,
+        action: 'start',
+        message: '開始前',
+        swaps: 0,
+        sorted: []
+      });
+      
+      for (let target = 0; target < length; target++) {
+        for (let compare = target + 1; compare < length; compare++) {
+          steps.push({
+            array: [...arr],
+            target: target,
+            compare: compare,
+            action: 'compare',
+            message: `arr[${target}] (${arr[target]}) と arr[${compare}] (${arr[compare]}) を比較`,
+            result: arr[target] > arr[compare] ? `${arr[target]} > ${arr[compare]}` : `${arr[target]} ≤ ${arr[compare]}`,
+            swaps: swaps,
+            sorted: Array.from({length: target}, (_, i) => i)
+          });
+          
+          if (arr[target] > arr[compare]) {
+            let storage = arr[target];
+            arr[target] = arr[compare];
+            arr[compare] = storage;
+            swaps++;
+            
+            steps.push({
+              array: [...arr],
+              target: target,
+              compare: compare,
+              action: 'swap',
+              message: `入れ替え！ arr[${target}] ⇄ arr[${compare}]`,
+              result: `${arr[target]} と ${arr[compare]} を入れ替えました`,
+              swaps: swaps,
+              sorted: Array.from({length: target}, (_, i) => i)
+            });
+          }
+        }
+        
+        steps.push({
+          array: [...arr],
+          target: target,
+          compare: null,
+          action: 'sorted',
+          message: `arr[${target}] が確定しました`,
+          result: `位置 ${target} に ${arr[target]} が確定`,
+          swaps: swaps,
+          sorted: Array.from({length: target + 1}, (_, i) => i)
+        });
+      }
+      
+      steps.push({
+        array: [...arr],
+        target: null,
+        compare: null,
+        action: 'complete',
+        message: 'ソート完了！',
+        result: `配列: [${arr.join(', ')}]`,
+        swaps: swaps,
+        sorted: Array.from({length: arr.length}, (_, i) => i)
+      });
+    }
+    
+    generateSteps();
+    
+    let currentStep = 0;
+    let isPlaying = false;
+    let playInterval = null;
+    let speed = 1000;
+    
+    const playBtn = document.getElementById('playBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const speedSlider = document.getElementById('speedSlider');
+    const speedValue = document.getElementById('speedValue');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const playIcon = document.getElementById('playIcon');
+    const playText = document.getElementById('playText');
+    
+    const arrayDisplay = document.getElementById('arrayDisplay');
+    const connectionSvg = document.getElementById('connectionSvg');
+    const connectionLabel = document.getElementById('connectionLabel');
+    const currentTarget = document.getElementById('currentTarget');
+    const currentCompare = document.getElementById('currentCompare');
+    const swapCount = document.getElementById('swapCount');
+    const comparisonText = document.getElementById('comparisonText');
+    const comparisonResult = document.getElementById('comparisonResult');
+    
+    function renderStep(stepIndex) {
+      const step = steps[stepIndex];
+      
+      arrayDisplay.innerHTML = '';
+      step.array.forEach((val, idx) => {
+        const item = document.createElement('div');
+        item.className = 'array-item';
+        
+        if (step.sorted && step.sorted.includes(idx)) {
+          item.classList.add('sorted');
+        }
+        
+        if (step.target === idx) {
+          item.classList.add('checking-target');
+        }
+        if (step.compare === idx) {
+          item.classList.add('checking-compare');
+        }
+        
+        if (step.action === 'swap' && (step.target === idx || step.compare === idx)) {
+          item.classList.add('swap');
+        }
+        
+        item.innerHTML = `
+          <div class="item-index">[${idx}]</div>
+          <div class="item-value">${val}</div>
+          ${step.target === idx ? '<div class="item-label target-label">target</div>' : ''}
+          ${step.compare === idx ? '<div class="item-label compare-label">compare</div>' : ''}
+        `;
+        
+        arrayDisplay.appendChild(item);
+      });
+      
+      connectionSvg.innerHTML = '';
+      connectionLabel.style.display = 'none';
+      
+      if (step.target !== null && step.compare !== null) {
+        const items = arrayDisplay.children;
+        const targetRect = items[step.target].getBoundingClientRect();
+        const compareRect = items[step.compare].getBoundingClientRect();
+        const containerRect = arrayDisplay.getBoundingClientRect();
+        
+        const x1 = targetRect.left - containerRect.left + targetRect.width / 2;
+        const x2 = compareRect.left - containerRect.left + compareRect.width / 2;
+        const y = 20;
+        
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const d = `M ${x1} 0 Q ${x1} ${y} ${(x1 + x2) / 2} ${y} Q ${x2} ${y} ${x2} 0`;
+        path.setAttribute('d', d);
+        path.setAttribute('stroke', step.action === 'swap' ? '#CE9178' : '#505050');
+        path.setAttribute('stroke-width', step.action === 'swap' ? '3' : '2');
+        path.setAttribute('fill', 'none');
+        connectionSvg.appendChild(path);
+        
+        connectionLabel.style.display = 'block';
+        connectionLabel.style.left = `${(x1 + x2) / 2}px`;
+        connectionLabel.className = `connection-label ${step.action === 'swap' ? 'swap' : 'checking'}`;
+        connectionLabel.textContent = step.action === 'swap' ? '入れ替え！' : '比較中';
+      }
+      
+      currentTarget.textContent = step.target !== null ? step.target : '-';
+      currentCompare.textContent = step.compare !== null ? step.compare : '-';
+      swapCount.textContent = step.swaps;
+      comparisonText.textContent = step.message;
+      comparisonResult.textContent = step.result || '';
+      comparisonResult.className = `comparison-result ${step.action === 'swap' ? 'swap' : 'no-swap'}`;
+      
+      progressFill.style.width = `${(stepIndex / (steps.length - 1)) * 100}%`;
+      progressText.textContent = `ステップ ${stepIndex}/${steps.length - 1}`;
+    }
+    
+    function nextStep() {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        renderStep(currentStep);
+      } else {
+        stopPlay();
+      }
+    }
+    
+    function startPlay() {
+      if (currentStep >= steps.length - 1) {
+        currentStep = 0;
+      }
+      isPlaying = true;
+      playBtn.classList.add('playing');
+      playIcon.textContent = '⏸';
+      playText.textContent = '一時停止';
+      playInterval = setInterval(nextStep, speed);
+    }
+    
+    function stopPlay() {
+      isPlaying = false;
+      playBtn.classList.remove('playing');
+      playIcon.textContent = '▶';
+      playText.textContent = '自動再生';
+      if (playInterval) {
+        clearInterval(playInterval);
+        playInterval = null;
+      }
+    }
+    
+    playBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        stopPlay();
+      } else {
+        startPlay();
+      }
+    });
+    
+    resetBtn.addEventListener('click', () => {
+      stopPlay();
+      currentStep = 0;
+      renderStep(currentStep);
+    });
+    
+    speedSlider.addEventListener('input', (e) => {
+      speed = parseInt(e.target.value);
+      speedValue.textContent = `${(speed / 1000).toFixed(1)}秒`;
+      if (isPlaying) {
+        stopPlay();
+        startPlay();
+      }
+    });
+    
+    progressBar.addEventListener('click', (e) => {
+      const rect = progressBar.getBoundingClientRect();
+      const percent = (e.clientX - rect.left) / rect.width;
+      currentStep = Math.round(percent * (steps.length - 1));
+      renderStep(currentStep);
+    });
+    
+    renderStep(0);
+  </script>
+</body>
+</html>

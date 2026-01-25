@@ -427,7 +427,6 @@ function calculateBMI(height, weight) {
 //BMIを計算して表示
 console.log("BMIは" + calculateBMI(170, 65));
 
-
 // 課題番号51P_4-------------------------------------------------------
 console.log(
   "ーーーーーーーーーーーーーーーーー数値と配列を渡すと、昇順でソートして配列を返す " +
@@ -435,4 +434,95 @@ console.log(
     "ーーーーーーーーーーーーーーーーー-",
 );
 
+// 配列　７．５、９，　３
+// 元のの番号（配列）
+originalNumbers = [3, 2, 1];
 
+// 昇順後の結果（配列）
+let lineUPnumbers = [];
+
+lineUpNum(originalNumbers);
+
+//　もとの番号をうけとって（7.5.9.3）
+function lineUpNum(originalNumbers) {
+  // もとの番号の長さを取得する（元の昇順する目的の配列）（4つ）
+  let length = originalNumbers.length;
+
+  // target: 「左から順番に席を埋めていく作業」における、いま現在注目している席（インデックス）
+  for (let target = 0; target < length; target++) {
+    // compare: 比較相手（ターゲットの次の数字から最後まで）
+    for (let compare = target + 1; compare < length; compare++) {
+      // originalNumbers(もとの)、
+      if (originalNumbers[target] > originalNumbers[compare]) {
+        // 入れ替え作業
+
+        let storage = originalNumbers[target];
+        originalNumbers[target] = originalNumbers[compare];
+        originalNumbers[compare] = storage;
+      }
+    }
+  }
+}
+console.log("配列昇順結果：" + originalNumbers);
+
+// 課題番号51P_4（別解）-------------------------------------------------------
+console.log(
+  "ーーーーーーーーーーーーーーーーー数値と配列を渡すと、昇順でソートして配列を返す " +
+    "\n" +
+    "ーーーーーーーーーーーーーーーーー-",
+);
+
+// シンプルな書き方（sortメソッドを使用）
+let simpleNumbers = [3, 2, 1];
+
+// a - b の結果が「正」なら入れ替える、というロジックで昇順になります
+simpleNumbers.sort((a, b) => a - b);
+
+console.log("配列昇順結果（シンプル版）：" + simpleNumbers);
+
+// 課題番号51P_5-------------------------------------------------------
+console.log(
+  "ーーーーーーーーーーーーーーーーー語尾に「にゃん」をつける " +
+    "\n" +
+    "ーーーーーーーーーーーーーーーーー-",
+);
+// 配列の各要素に「にゃん」をつけて新しい配列を返す関数
+function addNyanToArray(names) {
+  // 文字のなかに「。」あったら、そこに「にゃん」をつける
+  let modifiedWord = names.replace(/。/g, "にゃん。");
+  return modifiedWord;
+}
+
+let words = "こんにちは。お元気ですか。さようなら";
+console.log("語尾ににゃんをつけた配列：" + addNyanToArray(words));
+
+// ---------------------------------
+
+function pushBtn() {
+  const btnWord = document.getElementById("exam");
+  btnWord.textContent = "おされました";
+}
+
+const eventBtn = document.getElementById("examEvent");
+eventBtn.addEventListener(
+  "click",
+  function () {
+    eventBtn.textContent = "イベント登録されました";
+  },
+  false,
+);
+
+// ボタンがあされた時と、inputTextの値をアラートで表示する
+const showTextBtn = document.getElementById("showTextBtn");
+showTextBtn.addEventListener("click", function () {
+  const inputText = document.getElementById("inputText").value;
+  sum = inputText + 10; // 入力された値に10をかける
+  alert("入力された値に10をかけた結果は：" + sum);
+});
+
+// 課題番号65P_1 -------------------------------------------------------
+console.log(
+  "ーーーーーーーーーーーーーーーーーボタンを押すと背景の色が赤に変わる。もう一つのボタンを押すと背景が青に変わる。" +
+    "\n" +
+    "ーーーーーーーーーーーーーーーーー-",
+);
