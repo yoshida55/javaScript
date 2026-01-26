@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- CODE_HASH: 5cb06959bb6a1af135e71c3edbd14f80 -->
+  <!-- SOURCE_FILE: script.js -->
+  <!-- START_LINE: 463 -->
+  <!-- END_LINE: 474 -->
+  <!-- LANGUAGE: javascript -->
+  <!-- VISUALIZATION_TYPE: loop -->
+  <!-- CREATED_AT: 2026-01-26T04:26:55.485Z -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>バブルソート（降順）可視化</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Consolas', 'Monaco', monospace;
+      background: #1E1E1E;
+      color: #CCCCCC;
+      padding: 20px;
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    h1 { color: #4EC9B0; margin-bottom: 10px; font-size: 24px; }
+    .subtitle { color: #858585; margin-bottom: 20px; font-size: 14px; }
+
+    /* コントロール */
+    .controls {
+      background: #2A2D2E;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .controls-top {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      align-items: center;
+    }
+    .btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-play { background: #4EC9B0; color: #1E1E1E; font-weight: 600; }
+    .btn-play:hover { background: #5dd9c0; }
+    .btn-play.playing { background: #C586C0; }
+    .btn-reset { background: #3E3E42; color: #CCCCCC; }
+    .btn-reset:hover { background: #4E4E52; }
+
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+    .speed-label { color: #858585; font-size: 12px; }
+
+    .progress-container { display: flex; align-items: center; gap: 15px; }
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: #3E3E42;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #4EC9B0;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+    .progress-text { color: #4EC9B0; font-size: 14px; font-weight: 600; min-width: 120px; }
+
+    /* 配列表示 */
+    .arrays-container {
+      background: #252526;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+    .array-section { margin-bottom: 30px; }
+    .array-section:last-child { margin-bottom: 0; }
+    .array-title { color: #9CDCFE; font-size: 14px; margin-bottom: 15px; }
+    .array-wrapper { position: relative; padding-bottom: 90px; }
+    .array { display: flex; gap: 8px; position: relative; flex-wrap: wrap; }
+
+    .array-item {
+      width: 90px;
+      height: 95px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #3E3E42;
+      background: #2A2D2E;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .array-item:hover { border-color: #4EC9B0; }
+    .array-item.checking-j {
+      background: #264F78;
+      border: 3px solid #4EC9B0;
+      box-shadow: 0 0 15px rgba(78, 201, 176, 0.4);
+    }
+    .array-item.checking-jp1 {
+      background: #3E1F47;
+      border: 3px solid #C586C0;
+      box-shadow: 0 0 15px rgba(197, 134, 192, 0.4);
+    }
+    .array-item.swapping {
+      background: #4A2820;
+      border: 3px solid #CE9178;
+      box-shadow: 0 0 20px rgba(206, 145, 120, 0.6);
+      animation: pulse 0.5s;
+    }
+    .array-item.sorted {
+      background: #1E4620;
+      border: 2px solid #28A745;
+      opacity: 0.7;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .item-index { position: absolute; top: 3px; font-size: 9px; color: #858585; }
+    .item-value { font-size: 20px; font-weight: 600; color: #FFFFFF; }
+    .item-label { position: absolute; bottom: 3px; font-size: 8px; font-weight: 600; }
+    .item-label.j-label { color: #4EC9B0; }
+    .item-label.jp1-label { color: #C586C0; }
+
+    /* SVG線 */
+    .connection-svg {
+      position: absolute;
+      top: 95px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      pointer-events: none;
+    }
+    .connection-label {
+      position: absolute;
+      top: 130px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+    .connection-label.checking { color: #858585; background: #2A2D2E; }
+    .connection-label.swapping { color: #CE9178; background: #4A2820; }
+
+    /* 現在の状態 */
+    .current-state {
+      background: #2A2D2E;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .state-title { color: #9CDCFE; font-size: 14px; margin-bottom: 15px; }
+    .state-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .state-item { background: #1E1E1E; border-radius: 6px; padding: 15px; }
+    .state-label { color: #858585; font-size: 11px; margin-bottom: 8px; }
+    .state-value { font-size: 24px; font-weight: 600; }
+    .state-value.i-value { color: #4EC9B0; }
+    .state-value.j-value { color: #C586C0; }
+
+    .comparison-box {
+      background: #1E1E1E;
+      border-radius: 6px;
+      padding: 15px;
+      grid-column: span 3;
+    }
+    .comparison-text { font-size: 13px; color: #CCCCCC; margin-bottom: 8px; }
+    .comparison-result { font-size: 16px; font-weight: 600; }
+    .comparison-result.swap { color: #CE9178; }
+    .comparison-result.no-swap { color: #858585; }
+
+    /* コード表示 */
+    .code-display {
+      background: #252526;
+      border: 1px solid #3E3E42;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+    .code-keyword { color: #C586C0; }
+    .code-var { color: #9CDCFE; }
+    .code-number { color: #B5CEA8; }
+    .code-comment { color: #6A9955; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>バブルソート（降順）可視化</h1>
+    <p class="subtitle">配列を降順にソートする処理をステップごとに表示</p>
+
+    <!-- コントロール -->
+    <div class="controls">
+      <div class="controls-top">
+        <button class="btn btn-play" id="playBtn">
+          <span id="playIcon">▶</span>
+          <span id="playText">自動再生</span>
+        </button>
+        <button class="btn btn-reset" id="resetBtn">⏮ 最初に戻る</button>
+        <div class="speed-control">
+          <span class="speed-label">速度:</span>
+          <input type="range" id="speedSlider" min="500" max="3000" value="1500" step="500">
+          <span class="speed-label" id="speedValue">1.5秒</span>
+        </div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">ステップ 0/30</div>
+      </div>
+    </div>
+
+    <!-- 現在の状態 -->
+    <div class="current-state">
+      <div class="state-title">現在の状態:</div>
+      <div class="state-grid">
+        <div class="state-item">
+          <div class="state-label">外側ループ (i)</div>
+          <div class="state-value i-value" id="currentI">-</div>
+        </div>
+        <div class="state-item">
+          <div class="state-label">内側ループ (j)</div>
+          <div class="state-value j-value" id="currentJ">-</div>
+        </div>
+        <div class="state-item">
+          <div class="state-label">入れ替え回数</div>
+          <div class="state-value" id="swapCount">0</div>
+        </div>
+        <div class="comparison-box">
+          <div class="comparison-text" id="comparisonText">開始前</div>
+          <div class="comparison-result" id="comparisonResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 配列表示 -->
+    <div class="arrays-container">
+      <div class="array-section">
+        <div class="array-title">配列 (numbers):</div>
+        <div class="array-wrapper">
+          <div class="array" id="arrayDisplay"></div>
+          <svg class="connection-svg" id="connectionSvg"></svg>
+          <div class="connection-label" id="connectionLabel"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- コード表示 -->
+    <div class="code-display">
+<span class="code-keyword">for</span> (<span class="code-keyword">let</span> <span class="code-var">i</span> = <span class="code-number">0</span>; <span class="code-var">i</span> &lt; <span class="code-var">numbers</span>.<span class="code-var">length</span> - <span class="code-number">1</span>; <span class="code-var">i</span>++) {<br>
+&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">let</span> <span class="code-var">j</span> = <span class="code-number">0</span>; <span class="code-var">j</span> &lt; <span class="code-var">numbers</span>.<span class="code-var">length</span> - <span class="code-number">1</span> - <span class="code-var">i</span>; <span class="code-var">j</span>++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// もし左の数値と右の数値が左の数値が大きい場合、入れ替えを行う</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (<span class="code-var">numbers</span>[<span class="code-var">j</span>] &lt; <span class="code-var">numbers</span>[<span class="code-var">j</span> + <span class="code-number">1</span>]) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">let</span> <span class="code-var">saveBox</span> = <span class="code-var">numbers</span>[<span class="code-var">j</span>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// 入れ替え。大きいデータを右に移動</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-var">numbers</span>[<span class="code-var">j</span>] = <span class="code-var">numbers</span>[<span class="code-var">j</span> + <span class="code-number">1</span>];<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-var">numbers</span>[<span class="code-var">j</span> + <span class="code-number">1</span>] = <span class="code-var">saveBox</span>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+}<br>
+    </div>
+  </div>
+
+  <script>
+    const initialArray = [3, 1, 5, 2, 4];
+    let steps = [];
+    let currentStep = 0;
+    let isPlaying = false;
+    let playInterval = null;
+    let speed = 1500;
+
+    function generateSteps() {
+      const arr = [...initialArray];
+      const n = arr.length;
+      steps = [];
+      let swapCounter = 0;
+
+      steps.push({
+        type: 'start',
+        array: [...arr],
+        i: null,
+        j: null,
+        swapCount: 0,
+        message: '開始前',
+        result: ''
+      });
+
+      for (let i = 0; i < n - 1; i++) {
+        for (let j = 0; j < n - 1 - i; j++) {
+          steps.push({
+            type: 'compare',
+            array: [...arr],
+            i: i,
+            j: j,
+            jPlus1: j + 1,
+            swapCount: swapCounter,
+            message: `numbers[${j}] (${arr[j]}) と numbers[${j + 1}] (${arr[j + 1]}) を比較`,
+            result: arr[j] < arr[j + 1] ? `${arr[j]} < ${arr[j + 1]} → 入れ替えが必要` : `${arr[j]} ≥ ${arr[j + 1]} → 入れ替えなし`,
+            needSwap: arr[j] < arr[j + 1],
+            sortedStart: n - i
+          });
+
+          if (arr[j] < arr[j + 1]) {
+            let temp = arr[j];
+            arr[j] = arr[j + 1];
+            arr[j + 1] = temp;
+            swapCounter++;
+
+            steps.push({
+              type: 'swap',
+              array: [...arr],
+              i: i,
+              j: j,
+              jPlus1: j + 1,
+              swapCount: swapCounter,
+              message: `入れ替え実行: [${j}]↔[${j + 1}]`,
+              result: `入れ替え完了！`,
+              sortedStart: n - i
+            });
+          }
+        }
+      }
+
+      steps.push({
+        type: 'complete',
+        array: [...arr],
+        i: null,
+        j: null,
+        swapCount: swapCounter,
+        message: 'ソート完了！',
+        result: '降順に並び替えられました',
+        sortedStart: 0
+      });
+    }
+
+    function renderArray(stepData) {
+      const arrayDisplay = document.getElementById('arrayDisplay');
+      const connectionSvg = document.getElementById('connectionSvg');
+      const connectionLabel = document.getElementById('connectionLabel');
+      
+      arrayDisplay.innerHTML = '';
+      connectionSvg.innerHTML = '';
+      connectionLabel.style.display = 'none';
+
+      stepData.array.forEach((value, index) => {
+        const item = document.createElement('div');
+        item.className = 'array-item';
+        
+        if (stepData.sortedStart !== undefined && index >= stepData.sortedStart) {
+          item.classList.add('sorted');
+        }
+        
+        if (stepData.j !== null && index === stepData.j) {
+          item.classList.add('checking-j');
+          const label = document.createElement('div');
+          label.className = 'item-label j-label';
+          label.textContent = 'j';
+          item.appendChild(label);
+        }
+        
+        if (stepData.jPlus1 !== null && index === stepData.jPlus1) {
+          item.classList.add('checking-jp1');
+          const label = document.createElement('div');
+          label.className = 'item-label jp1-label';
+          label.textContent = 'j+1';
+          item.appendChild(label);
+        }
+        
+        if (stepData.type === 'swap' && (index === stepData.j || index === stepData.jPlus1)) {
+          item.classList.add('swapping');
+        }
+
+        const indexEl = document.createElement('div');
+        indexEl.className = 'item-index';
+        indexEl.textContent = `[${index}]`;
+        
+        const valueEl = document.createElement('div');
+        valueEl.className = 'item-value';
+        valueEl.textContent = value;
+        
+        item.appendChild(indexEl);
+        item.appendChild(valueEl);
+        arrayDisplay.appendChild(item);
+      });
+
+      if (stepData.j !== null && stepData.jPlus1 !== null) {
+        const items = arrayDisplay.children;
+        const rect1 = items[stepData.j].getBoundingClientRect();
+        const rect2 = items[stepData.jPlus1].getBoundingClientRect();
+        const containerRect = arrayDisplay.getBoundingClientRect();
+        
+        const x1 = rect1.left - containerRect.left + rect1.width / 2;
+        const x2 = rect2.left - containerRect.left + rect2.width / 2;
+        const y = 40;
+        
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const midX = (x1 + x2) / 2;
+        const curveDepth = 30;
+        const d = `M ${x1} ${y} Q ${midX} ${y + curveDepth} ${x2} ${y}`;
+        
+        path.setAttribute('d', d);
+        path.setAttribute('stroke', stepData.type === 'swap' ? '#CE9178' : '#505050');
+        path.setAttribute('stroke-width', stepData.type === 'swap' ? '3' : '2');
+        path.setAttribute('fill', 'none');
+        
+        connectionSvg.appendChild(path);
+        
+        connectionLabel.style.display = 'block';
+        connectionLabel.style.left = `${midX}px`;
+        connectionLabel.className = `connection-label ${stepData.type === 'swap' ? 'swapping' : 'checking'}`;
+        connectionLabel.textContent = stepData.type === 'swap' ? '入れ替え！' : '比較中';
+      }
+    }
+
+    function updateState(stepData) {
+      document.getElementById('currentI').textContent = stepData.i !== null ? stepData.i : '-';
+      document.getElementById('currentJ').textContent = stepData.j !== null ? stepData.j : '-';
+      document.getElementById('swapCount').textContent = stepData.swapCount;
+      document.getElementById('comparisonText').textContent = stepData.message;
+      
+      const resultEl = document.getElementById('comparisonResult');
+      resultEl.textContent = stepData.result;
+      resultEl.className = 'comparison-result';
+      if (stepData.type === 'swap') {
+        resultEl.classList.add('swap');
+      } else if (stepData.needSwap === false) {
+        resultEl.classList.add('no-swap');
+      }
+    }
+
+    function updateProgress() {
+      const progress = (currentStep / (steps.length - 1)) * 100;
+      document.getElementById('progressFill').style.width = `${progress}%`;
+      document.getElementById('progressText').textContent = `ステップ ${currentStep}/${steps.length - 1}`;
+    }
+
+    function showStep(index) {
+      if (index < 0 || index >= steps.length) return;
+      currentStep = index;
+      const stepData = steps[currentStep];
+      renderArray(stepData);
+      updateState(stepData);
+      updateProgress();
+    }
+
+    function play() {
+      if (isPlaying) {
+        pause();
+        return;
+      }
+      
+      if (currentStep >= steps.length - 1) {
+        currentStep = 0;
+      }
+      
+      isPlaying = true;
+      document.getElementById('playBtn').classList.add('playing');
+      document.getElementById('playIcon').textContent = '⏸';
+      document.getElementById('playText').textContent = '一時停止';
+      
+      playInterval = setInterval(() => {
+        if (currentStep < steps.length - 1) {
+          showStep(currentStep + 1);
+        } else {
+          pause();
+        }
+      }, speed);
+    }
+
+    function pause() {
+      isPlaying = false;
+      clearInterval(playInterval);
+      document.getElementById('playBtn').classList.remove('playing');
+      document.getElementById('playIcon').textContent = '▶';
+      document.getElementById('playText').textContent = '自動再生';
+    }
+
+    function reset() {
+      pause();
+      currentStep = 0;
+      showStep(0);
+    }
+
+    document.getElementById('playBtn').addEventListener('click', play);
+    document.getElementById('resetBtn').addEventListener('click', reset);
+
+    document.getElementById('speedSlider').addEventListener('input', (e) => {
+      speed = parseInt(e.target.value);
+      document.getElementById('speedValue').textContent = `${(speed / 1000).toFixed(1)}秒`;
+      if (isPlaying) {
+        pause();
+        play();
+      }
+    });
+
+    document.getElementById('progressBar').addEventListener('click', (e) => {
+      const rect = e.target.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const percent = x / rect.width;
+      const targetStep = Math.floor(percent * (steps.length - 1));
+      pause();
+      showStep(targetStep);
+    });
+
+    generateSteps();
+    showStep(0);
+  </script>
+</body>
+</html>
