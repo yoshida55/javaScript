@@ -1,0 +1,8 @@
+{
+  "type": "pwa-chrome",
+  "request": "launch",
+  "name": "Debug 127",
+  "url": "http://127.0.0.1:5500/index.html",
+  "webRoot": "${workspaceFolder}",
+  "runtimeArgs": ["--disable-extensions"]
+}
