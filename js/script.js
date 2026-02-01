@@ -652,3 +652,28 @@ colorChangeBtn2.addEventListener("click", function () {
   const colorInput = document.getElementById("colorInput").value;
   box.style.backgroundColor = colorInput;
 });
+
+// バブルソート復習 -------------------------------------------------------
+console.log(
+  "✕✕✕ーーーーーーーーーーーーーーーーー" +
+    "\n" +
+    "２回目完了``" +
+    "ーーーーーーーーーーーーーーーーー-",
+);
+namesa = [5, 2, 8, 1];
+
+// ようするに３回やって意味だえ。
+for (let q = 0; q < namesa.length - 1; q++) {
+  // まず➡に一番大きいものを移動する。
+  for (let i = 0; i < namesa.length - 1; i++) {
+    // もし1番目の数値が大きい場合
+    if (namesa[i] > namesa[i + 1]) {
+      let saveBox = namesa[i];
+      // 入れ替え。大きいデータを右に移動
+      namesa[i] = namesa[i + 1];
+      namesa[i + 1] = saveBox;
+    }
+  }
+}
+
+console.log("昇順にならびかえたランダムな配列は" + namesa);
