@@ -7,9 +7,14 @@
   height: 20rem;
   background-color: lightblue;
   margin-bottom: 5rem;
+  border: 0.5rem solid red;
 }
 
 .box_msg {
   width: 20rem;
-  height: 4rem;
+  height: 2rem;
+}
+
+#sumBtn {
+  display: block;
 }
