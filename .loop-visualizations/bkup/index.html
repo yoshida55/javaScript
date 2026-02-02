@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="css/work.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <button id="exam" onclick="pushBtn()">おしてみて</button>
+      <button id="examEvent">イベント登録するよ</button>
+
+      <input type="text" id="inputText" />
+      <button id="showTextBtn">テキストを表示するよ</button>
+
+      <!-- ===============================================
+       p65 （DOM操作・色をかえたり）課題
+       =============================================== -->
+      <!-- 箱を作成する -->
+      <div id="box">
+        <button class="box_msg" id="colorChangeBtnRed">おしてみて色が赤にかわるから</button>
+        <button class="box_msg" id="colorChangeBtnBlue">おしてみて色が青にかわるから</button>
+        <!-- カラーコードを変える -->
+        <input type="text" id="colorInput" />
+        <button id="applyColorBtn">テキスト入力したカラーコードを適用する</button>
+
+        <!-- 足し算をする -->
+        <input type="text" id="numInput1" />
+        <input type="text" id="numInput2" />
+        <button id="sumBtn">足し算するよ</button>
+        <div class="box_msg" id="sumResult">ここに足し算の結果がでるよ</div>
+
+        <button id="pushBtn">押せボタン</button>
+        <div id="pushCountNum" id="pushCount">ここに「押せボタン」が押された回数がでるよ</div>
+      </div>
+
+      <div>
+        <h1 id="myText">文字をシャッフルするよ</h1>
+      </div>
+
+      <!-- ===============================================
+       スライダー
+       ============================================== -->
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            スライド1
+            <img src="img/image1.png" alt="サンプル画像1" />
+          </div>
+          <div class="swiper-slide">
+            スライド2
+            <img src="img/image2.png" alt="サンプル画像2" />
+          </div>
+          <div class="swiper-slide">
+            スライド3
+            <img src="img/image3.png" alt="サンプル画像3" />
+          </div>
+        </div>
+        <!-- ページネーション -->
+        <div class="swiper-pagination"></div>
+
+        <!-- ナビゲーション矢印を追加 -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </main>
+    <script type="module">
+      import Swiper from "https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.mjs";
+
+      const swiper = new Swiper(".swiper", {
+        // 設定
+        loop: true, // 繰り返し
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    </script>
+    <script src="js/script_kenshu.js"></script>
+    <!-- <script src="js/shuffle-text.js"></script>
+    <script src="js/library.js"></script> -->
+  </body>
+</html>

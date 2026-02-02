@@ -2,6 +2,16 @@
    │ aaa                        │
    └─────────────────────────────────────────┘ */
 
+.container {
+  width: auto;
+  height: auto;
+  border: 1px solid black;
+}
+
+.exam {
+}
+
+/* 
 #box {
   width: 20rem;
   height: 20rem;
@@ -16,4 +26,4 @@
 
 #sumBtn {
   display: block;
-}
+} */
