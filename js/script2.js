@@ -32,9 +32,9 @@ const box1 = document.getElementById("box");
 // ボタン青の確認
 console.log(btnBlue);
 
-btnBlue.addEventListener("click", function () {
-  box1.style.backgroundColor = "blue";
-});
+// btnBlue.addEventListener("click", function () {
+//   box1.style.backgroundColor = "blue";
+// });
 
 btnRed.addEventListener("click", function () {
   box1.style.backgroundColor = "red";
@@ -85,7 +85,7 @@ for (let i = 0; i < 10; i++) {
     //要素を作成する
     const tempDiv = document.createElement("button");
     //要素にクラスを追加する
-    tempDiv.classList.add("box_msg" + i + "_" + j);
+    // tempDiv.classList.add("box_msg" + i + "_" + j);
     //要素にテキストを追加する
     tempDiv.textContent = "押して";
     // tempDiv.textContent = "押して" + tempDiv.classList;

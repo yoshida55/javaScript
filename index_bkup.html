@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/work.css" />
+  </head>
+  <body>
+    <div class="container" id="container">
+      <button class="exam" id="exam">押してみて</button>
+      <button class="examEvent" id="examEvent">イベント登録するよ</button>
+      <!-- 合計表示 -->
+      <input type="text" id="inputText" />
+      <button id="showTextBtn">プラス１０するよ</button>
+
+      <!-- ➀divタグをボタンに変更するよ -->
+      <div id="changeDiv">aaaa</div>
+      <button id="changeBtn">変化するよ</button>
+
+      <!-- ➁既存のulタグにliタグをjavaScriptで追加するよ -->
+      <div>
+        <ul id="myList"></ul>
+        <button id="addItemBtn">リストに項目を追加するよ</button>
+      </div>
+
+      <!-- ➂divタグの色を変えるよ -->
+      <button id="changeColorBtn">青色に変更するよ</button>
+
+      <!-- ➃カラーコード指定-->
+      <input type="text" id="inputText1" />
+      <button id="btnChgColor">カラーコードを指定してね</button>
+    </div>
+
+    <!-- ➄ボタン足し算 -->
+    <div class="container5">
+      <input type="text" id="num1" />
+      <span>+</span>
+      <input type="text" id="num2" />
+      <button id="btnSum">=</button>
+      <span id="result"></span>
+    </div>
+
+    <!-- ➅このdivタグ内に１００個のボタンを追加する -->
+    <div class="boxTemp" id="boxTemp"></div>
+
+    <!-- ➆文字をシャッフルする -->
+    <h1 id="myText">文字をシャッフルするよ</h1>
+
+    <div id="particles-js"></div>
+
+    <div class="space_interval"></div>
+
+    <!-- 1. CDNの読み込み -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <!-- 2. 初期設定 -->
+    <script>
+      /* 第一引数は要素のid名、第二引数は設定オブジェクト */
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 80 },
+          shape: { type: "circle" },
+          size: { value: 3 },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#ffffff",
+            opacity: 0.4,
+            width: 1,
+          },
+          move: {
+            enable: true,
+            speed: 6,
+          },
+        },
+        interactivity: {
+          events: {
+            onhover: { enable: true, mode: "repulse" },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
