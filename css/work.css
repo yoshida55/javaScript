@@ -36,6 +36,36 @@ body {
   height: 100vh;
   background-color: #000000;
 }
+
+#btnPress {
+  border: 0.5rem solid red;
+}
+
+#particles-js {
+  background-color: black;
+}
+
+.swiper {
+  width: 600px;
+  height: 300px;
+  /* background-color: orange;
+  background-image: url("../img/image1.png"); */
+}
+
+.swiper-slide {
+  background-color: yellow;
+  background-image: url("../img/image1.png");
+}
+.swiper-slide:nth-child(2) {
+  background-color: yellow;
+  background-image: url("../img/image2.png");
+}
+
+.swiper-slide:nth-child(2) {
+  background-color: yellow;
+  background-image: url("../img/image3.png");
+}
+
 /* 
 #box {
   width: 20rem;

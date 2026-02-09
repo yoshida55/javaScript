@@ -78,25 +78,71 @@ btnSum.addEventListener("click", function () {
   sumResult.textContent = result;
 });
 
+console.log("！！！ーーーーーーーーーーーーーーーーーーーーーー【65-4】DOM課題➁　5" + "\n" + "ーーーーーーーーーーーーーーーーー-");
+
+let count = 0;
+
+console.log("！！！ーーーーーーーーーーーーーーーーーーーーーー【66-5】DOM課題➁　5" + "\n" + "ーーーーーーーーーーーーーーーーー-");
+
+let countA = 0;
+const btnPress = document.getElementById("btnPress");
+const result = document.getElementById("result1");
+
+btnPress.addEventListener("click", function () {
+  console.log("はいっています★★★");
+  countA++;
+  result.textContent = "ボタンが押された回数：" + countA;
+
+  if (countA > 9) {
+    result.textContent = "10回クリックした！";
+    result.style.color = "red";
+  }
+
+  if (countA > 10) {
+    countA = 0;
+    result.textContent = "リセットしました。";
+    result.style.color = "black";
+  }
+});
+
 console.log("！！！ーーーーーーーーーーーーーーーーーーーーーー【66-5】DOM課題➁　5" + "\n" + "ーーーーーーーーーーーーーーーーー-");
 
 // ➅このdivタグ内に１００個のボタンを追加する
 
-const boxTemp = document.getElementById("boxTemp");
+// const boxTemp = document.getElementById("boxTemp");
 
+// for (let j = 0; j < 10; j++) {
+//   for (let i = 0; i < 10; i++) {
+//     // 横一列
+//     const createButton = document.createElement("button");
+//     createButton.textContent = `ボタン${j * 10 + i + 1}`;
+//     boxTemp.appendChild(createButton);
+//     createButton.addEventListener("click", function () {
+//       createButton.style.backgroundColor = "yellow";
+//     });
+//   }
+//   // ループの最後に改行を追加する
+//   const lineBreak = document.createElement("br");
+//   boxTemp.appendChild(lineBreak);
+// }
+
+const container1 = document.querySelector(".container2");
 for (let j = 0; j < 10; j++) {
   for (let i = 0; i < 10; i++) {
-    // 横一列
-    const createButton = document.createElement("button");
-    createButton.textContent = `ボタン${j + i}`;
-    boxTemp.appendChild(createButton);
-    createButton.addEventListener("click", function () {
-      createButton.style.backgroundColor = "yellow";
+    const buttonObj = document.createElement("button");
+    buttonObj.textContent = "押して";
+
+    console.log(buttonObj + i);
+
+    buttonObj.addEventListener("click", function () {
+      buttonObj.style.backgroundColor = "yellow";
+      console.log(buttonObj);
     });
+    container1.appendChild(buttonObj);
+    console.log(buttonObj);
   }
-  // ループの最後に改行を追加する
-  const lineBreak = document.createElement("br");
-  boxTemp.appendChild(lineBreak);
+  const brObj = document.createElement("br");
+  container1.appendChild(brObj);
 }
 
 console.log("!!!ーーーーーーーーーーーーーーーーーーーーーー【68-5】ライブラリ" + "\n" + "ーーーーーーーーーーーーーーーーー-");
