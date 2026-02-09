@@ -82,6 +82,7 @@ console.log("ーーーーーーーーーーーーーーーーーーーーーー�
 
 for (let i = 0; i < 10; i++) {
   for (let j = 0; j < 10; j++) {
+    console.log("i:" + i + " j:" + j);
     //要素を作成する
     const tempDiv = document.createElement("button");
     //要素にクラスを追加する
@@ -102,3 +103,29 @@ for (let i = 0; i < 10; i++) {
   }
   document.body.appendChild(document.createElement("br"));
 }
+
+console.log("ーーーーーーーーーーーーーーーーーーーーーー【66-4】particles.js " + "\n" + "ーーーーーーーーーーーーーーーーー-");
+/* 第一引数は要素のid名、第二引数は設定オブジェクト */
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 80 },
+    shape: { type: "circle" },
+    size: { value: 3 },
+    line_linked: {
+      enable: true,
+      distance: 150,
+      color: "#ffffff",
+      opacity: 0.4,
+      width: 1,
+    },
+    move: {
+      enable: true,
+      speed: 6,
+    },
+  },
+  interactivity: {
+    events: {
+      onhover: { enable: true, mode: "repulse" },
+    },
+  },
+});

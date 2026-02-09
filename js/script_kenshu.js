@@ -100,3 +100,27 @@ for (let j = 0; j < 10; j++) {
 }
 
 console.log("!!!ーーーーーーーーーーーーーーーーーーーーーー【68-5】ライブラリ" + "\n" + "ーーーーーーーーーーーーーーーーー-");
+/* 第一引数は要素のid名、第二引数は設定オブジェクト */
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 80 },
+    shape: { type: "circle" },
+    size: { value: 3 },
+    line_linked: {
+      enable: true,
+      distance: 150,
+      color: "#ffffff",
+      opacity: 0.4,
+      width: 1,
+    },
+    move: {
+      enable: true,
+      speed: 6,
+    },
+  },
+  interactivity: {
+    events: {
+      onhover: { enable: true, mode: "repulse" },
+    },
+  },
+});

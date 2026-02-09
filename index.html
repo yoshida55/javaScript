@@ -44,42 +44,13 @@
     <!-- ➅このdivタグ内に１００個のボタンを追加する -->
     <div class="boxTemp" id="boxTemp"></div>
 
+    <div id="particles-js"></div>
+
     <!-- ➆文字をシャッフルする -->
     <h1 id="myText">文字をシャッフルするよ</h1>
 
-    <div id="particles-js"></div>
-
-    <div class="space_interval"></div>
-
     <!-- 1. CDNの読み込み -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
-    <!-- 2. 初期設定 -->
-    <script>
-      /* 第一引数は要素のid名、第二引数は設定オブジェクト */
-      particlesJS("particles-js", {
-        particles: {
-          number: { value: 80 },
-          shape: { type: "circle" },
-          size: { value: 3 },
-          line_linked: {
-            enable: true,
-            distance: 150,
-            color: "#ffffff",
-            opacity: 0.4,
-            width: 1,
-          },
-          move: {
-            enable: true,
-            speed: 6,
-          },
-        },
-        interactivity: {
-          events: {
-            onhover: { enable: true, mode: "repulse" },
-          },
-        },
-      });
-    </script>
+    <script src="js/script_kenshu.js"></script>
   </body>
 </html>
