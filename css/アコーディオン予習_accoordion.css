@@ -1,0 +1,63 @@
+.acc {
+  max-width: 800px;
+  margin: 40px auto;
+}
+
+/* アコーディオン・選択するとメニュー */
+.acc-btn {
+  width: 80%;
+  padding: 16px;
+  /* border: 1px solid #000; */
+  background: #ffd86a;
+
+  display: flex;
+  justify-content: space-between;
+
+  border: 0.1px solid blue;
+}
+.acc-btn-title {
+  font-size: 16px;
+  display: block;
+}
+
+#acc-btn-icon.active::before {
+  display: block;
+  content: "ー";
+  font-size: 20px;
+}
+
+#acc-btn-icon::before {
+  display: block;
+  padding-right: 10px;
+  cursor: pointer;
+  content: "＋";
+}
+
+/* 表示エリア flex */
+.acc-panel {
+  width: 60%;
+  padding: 16px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.acc-panel-title {
+}
+.acc-panel-description {
+}
+
+/* ┌─────────────────────────────────────────┐
+   │ flexサンプル                        │
+   └─────────────────────────────────────────┘ */
+<section class="acc">
+  /* フレックスを２列する */
+  <div>
+    <div>1</div>
+    <div>2</div>
+  </div>
+</section>
+
+/* ┌─────────────────────────────────────────┐
+   │ セクション名                        │
+   └─────────────────────────────────────────┘ */
