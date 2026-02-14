@@ -1,19 +1,59 @@
 // jQuery
 // Pタグを要素にいれる
-$(".inPTag").append("<p class='myClass'>jQuery</p>");
-$(".myClass").slideToggle(2000);
+// $(".inPTag").append("<p class='myClass'>jQuery</p>");
+// $(".myClass").slideToggle(2000);
+
+// HTMLの読み込みが完了してから中の処理を実行する
+const accBtnIcon = document.getElementById("acc-btn-icon");
+
+$(function () {
+  $(".acc-btn").on("click", function () {
+    $(this).next(".acc-panel").slideToggle(200);
+    console.log("クリックされました");
+    accBtnIcon.classList.toggle("active");
+    console.log(accBtnIcon);
+  });
+});
+
+// $(document).ready(function() {
+//   $('.accordion-header').click(function() {
+//     $(this).next('.accordion-content').slideToggle();
+//     $(this).toggleClass('active');
+//   });
+// });
+
+// 【functionの説明】
+/* ✨
+# 2つのfunctionの説明
+
+## 1個目の function
+$(function () { ... });
+- **ドキュメント読み込み完了を待つ関数**
+- `$(document).ready(function(){...})` の省略形
+- HTMLの読み込みが完了してから中の処理を実行する
+
+## 2個目の function
+$(".accordion-header").click(function () { ... });
+- **クリックイベントのコールバック関数**
+- `.accordion-header` がクリックされた時に実行される処理
+- クリックされた要素に対してスライドトグルとクラス切替を行う
+
+## まとめ
+- **1個目**: 「ページ準備完了後に実行」という**タイミング制御**
+- **2個目**: 「クリックされたら実行」という**イベント処理**
+*/
 
 /* ✨
+
+
+**推奨される書き方：**
+
+// 推奨：短縮記法
+
 # jQueryでアコーディオンメニューの作り方
 
 ## 基本的な実装方法
 
-$(document).ready(function() {
-  $('.accordion-header').click(function() {
-    $(this).next('.accordion-content').slideToggle();
-    $(this).toggleClass('active');
-  });
-});
 
 ## HTML構造
 <div class="accordion">
