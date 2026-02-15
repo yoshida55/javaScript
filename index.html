@@ -3,32 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>募集職種</title>
-    <link rel="stylesheet" href="css/accodion.css" />
+    <title>画像切り替え</title>
+    <link rel="stylesheet" href="css/画像の切替セクション.css" />
   </head>
   <body>
     <!-- ===============================================
-     ヘッダー
+     画像切り替えセクション
      =============================================== -->
-    <header class="header_area">
-      <!-- アコーディオンヘッダー -->
-      <div class="header_container">
-        <h2 class="header_title">Webディレクター</h2>
-        <div class="header_button"></div>
+    <section class="gallery_area">
+      <!-- 大きな画像 -->
+      <img alt="大きな画像" class="gallery_main" />
+      <!-- 小さな画像　flex -->
+      <div class="gallery_thumbnails">
+        <img src="img/image1.png" alt="画像1" class="gallery_img" />
+        <img src="img/image2.png" alt="画像2" class="gallery_img" />
+        <img src="img/image3.png" alt="画像3" class="gallery_img" />
+        <img src="img/image1.png" alt="画像4" class="gallery_img" />
+        <img src="img/image2.png" alt="画像5" class="gallery_img" />
       </div>
-
-      <!-- アコーディオン詳細 -->
-      <div class="header_item">
-        <h3 class="header_item_title">仕事内容</h3>
-        <p class="header_item_description">テキストテキストテキストテキストテキスト</p>
-      </div>
-      <div class="header_item">
-        <h3 class="header_item_title">応募資格</h3>
-        <p class="header_item_description">テキストテキストテキストテキストテキスト</p>
-      </div>
-    </header>
-
+    </section>
+    <!-- 画像の切り替えのライブラリ読み込み -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/accordion.js"></script>
+    <script src="js/画像の切替セクション.js"></script>
   </body>
 </html>

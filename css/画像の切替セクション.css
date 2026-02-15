@@ -1,0 +1,37 @@
+/* ┌─────────────────────────────────────────┐
+   │ 画像切り替えセクション                  │
+   │ - 上に大きな画像表示エリア              │
+   │ - 下に小さい画像を横並び                │
+   │ - クリックで上の画像を切り替え          │
+   └─────────────────────────────────────────┘ */
+
+.gallery_area {
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+/* 大きな画像 */
+.gallery_main {
+  display: block;
+  width: 100%;
+  height: 400px;
+  margin-bottom: 20px;
+  background-color: #eee;
+  object-fit: contain;
+}
+
+/* 小さな画像　flex */
+.gallery_thumbnails {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.gallery_img {
+  width: calc((100% - (10px * 4)) / 5); /* 5枚の画像と4つのgapを考慮して幅を計算 */
+  height: 200px;
+  margin-top: 20px;
+  cursor: pointer;
+  object-fit: cover;
+}

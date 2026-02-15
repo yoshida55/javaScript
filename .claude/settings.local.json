@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:amano-clinic.jp)",
       "WebFetch(domain:xd.adobe.com)",
-      "Bash(test -d \"D:\\\\50_knowledge\\\\その他\\\\00_サンプルソース\")"
+      "Bash(test -d \"D:\\\\50_knowledge\\\\その他\\\\00_サンプルソース\")",
+      "Bash(\"D:\\\\50_knowledge\\\\01_memo.md\":*)"
     ]
   }
 }
