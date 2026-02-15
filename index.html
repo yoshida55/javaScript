@@ -1,29 +1,35 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>画像切り替え</title>
-    <link rel="stylesheet" href="css/画像の切替セクション.css" />
+    <!-- work.css" を読み込む -->
+    <link rel="stylesheet" href="css/work.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    <title>Document</title>
   </head>
   <body>
-    <!-- ===============================================
-     画像切り替えセクション
-     =============================================== -->
-    <section class="gallery_area">
-      <!-- 大きな画像 -->
-      <img alt="大きな画像" class="gallery_main" />
-      <!-- 小さな画像　flex -->
-      <div class="gallery_thumbnails">
-        <img src="img/image1.png" alt="画像1" class="gallery_img" />
-        <img src="img/image2.png" alt="画像2" class="gallery_img" />
-        <img src="img/image3.png" alt="画像3" class="gallery_img" />
-        <img src="img/image1.png" alt="画像4" class="gallery_img" />
-        <img src="img/image2.png" alt="画像5" class="gallery_img" />
+    <div class="swiper">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide">Slide 1</div>
+        <div class="swiper-slide">Slide 2</div>
+        <div class="swiper-slide">Slide 3</div>
+        ...
       </div>
-    </section>
-    <!-- 画像の切り替えのライブラリ読み込み -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/画像の切替セクション.js"></script>
+      <!-- If we need pagination -->
+      <div class="swiper-pagination"></div>
+
+      <!-- If we need navigation buttons -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+
+      <!-- If we need scrollbar -->
+      <div class="swiper-scrollbar"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+    <script src="js/swiper.js"></script>
   </body>
 </html>
