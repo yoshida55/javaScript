@@ -1,117 +1,64 @@
-// アコーディオンメニューを作成する
-let firstFlg = true;
-let firstFlg1 = true;
-let firstFlg2 = true;
+// $(function () {
+//   $(".plus, .plus1, .plus2").text("＋"); // ← これが初期表示
 
-// if (firstFlg) {
-//   var plusFirst = $(".plus");
-//   plusFirst.text("＋");
-//   firstFlg = false;
+//   // 全アコーディオンを一つにまとめる
+//   $("#work, #work1, #work2").click(function () {
+//     var content = $(this).next();
+//     var plusObj = $(this).find(".plus, .plus1, .plus2");
 
-//   console.log("初期表示の処理が実行されました。");
-// }
+//     content.slideToggle();
+
+//     if (plusObj.text() === "＋") {
+//       plusObj.text("ー");
+//     } else {
+//       plusObj.text("＋");
+//     }
+//   });
+// });
 
 $(function () {
+  $(".plus, .plus1, .plus2").text("＋"); // ← これが初期表示
+
   // アコーディオンのタイトルをクリックしたときの処理
-  $("#work").click(function () {
-    console.log("クリックされました。");
-    // クリックされたタイトルの次の要素（コンテンツ）を取得
-    // var content = $(this).next(".accordion-content");
+  $("#work, #work1, #work2").click(function () {
+    var plus = $(this).find(".plus, .plus1, .plus2");
+    var accordionContent = $(this).next(".accordion-content, .accordion-content1, .accordion-content2");
 
-    // 3つの子要素を取得
-    var content = $(".accordion-content");
+    accordionContent.slideToggle();
 
-    // その要素自体を取得
-    var plusObj = $(".plus");
-    // コンテンツが表示されているかどうかをチェック
-    // if (content.is(":visible")) {
-    //   // コンテンツが表示されている場合は、スライドアップして非表示にする
-    //   content.slideUp();
-    // } else {
-    //   // コンテンツが非表示の場合は、スライドダウンして表示する
-    //   content.slideDown();
-    // }
-
-    content.slideToggle();
-    plusObj.toggleClass("open");
-    plusObj.text("");
-
-    if (plusObj.is(".open")) {
-      console.log("openあり");
+    if (plus.text() === "＋") {
+      plus.text("ー");
     } else {
-      console.log("openなし");
+      plus.text("＋");
     }
   });
 });
 
-$(function () {
-  // アコーディオンのタイトルをクリックしたときの処理
-  $("#work1").click(function () {
-    console.log("クリックされました。");
-    // クリックされたタイトルの次の要素（コンテンツ）を取得
-    // var content = $(this).next(".accordion-content");
-    var content1 = $(".accordion-content1").contents();
-    var plusObj1 = $(".plus1");
-    // コンテンツが表示されているかどうかをチェック
-    // if (content.is(":visible")) {
-    //   // コンテンツが表示されている場合は、スライドアップして非表示にする
-    //   content.slideUp();
-    // } else {
-    //   // コンテンツが非表示の場合は、スライドダウンして表示する
-    //   content.slideDown();
-    // }
+// $("#work1").click(function () {
+//   console.log("クリックされました。");
+//   var content1 = $(".accordion-content1");
+//   var plusObj1 = $(".plus1");
 
-    // 初期表示はスライドダウンする
-    if (firstFlg1) {
-      content1.slideDown();
-      firstFlg1 = false;
-      return;
-    }
+//   content1.slideToggle();
+//   if (plusObj1.text() === "＋") {
+//     plusObj1.text("ー");
+//   } else {
+//     plusObj1.text("＋");
+//   }
+// });
 
-    content1.slideToggle();
-    plusObj1.toggleClass("open");
-    plusObj1.text("");
+// // アコーディオンのタイトルをクリックしたときの処理
+// $("#work2").click(function () {
+//   console.log("クリックされました。");
+//   // クリックされたタイトルの次の要素（コンテンツ）を取得
+//   // var content = $(this).next(".accordion-content");
+//   var content2 = $(".accordion-content2");
+//   var plusObj2 = $(".plus2");
 
-    if (plusObj1.is(".open")) {
-      console.log("openあり1");
-    } else {
-      console.log("openなし1");
-    }
-  });
-});
-
-$(function () {
-  // アコーディオンのタイトルをクリックしたときの処理
-  $("#work2").click(function () {
-    console.log("クリックされました。");
-    // クリックされたタイトルの次の要素（コンテンツ）を取得
-    // var content = $(this).next(".accordion-content");
-    var content2 = $(".accordion-content2").contents();
-    var plusObj2 = $(".plus2");
-    // コンテンツが表示されているかどうかをチェック
-    // if (content.is(":visible")) {
-    //   // コンテンツが表示されている場合は、スライドアップして非表示にする
-    //   content.slideUp();
-    // } else {
-    //   // コンテンツが非表示の場合は、スライドダウンして表示する
-    //   content.slideDown();
-    // }
-
-    // 初期表示はスライドダウンする
-    if (firstFlg2) {
-      content2.slideDown();
-      firstFlg2 = false;
-      return;
-    }
-
-    content2.slideToggle();
-    plusObj2.toggleClass("open");
-    plusObj2.text("");
-
-    if (plusObj2.is(".open")) {
-      console.log("openあり2");
-    } else {
-      console.log("openなし2");
-    }
-  });
-});
+//   content2.slideToggle();
+//   if (plusObj2.text() === "＋") {
+//     plusObj2.text("ー");
+//   } else {
+//     plusObj2.text("＋");
+//   }
+// });

@@ -62,19 +62,6 @@ h2 {
   text-align: left;
 }
 
-.plus {
-}
-
-.plus::after {
-  content: "＋";
-  display: block;
-}
-
-.plus.open::after {
-  content: "ー";
-  display: block;
-}
-
 .work_list:nth-child(8) {
   margin-bottom: 2rem;
 }
@@ -106,15 +93,6 @@ h2 {
   margin-left: 1rem;
 }
 
-.plus1::after {
-  content: "＋";
-  display: block;
-}
-
-.plus1.open::after {
-  content: "ー";
-  display: block;
-}
 /* --------------------------------------- */
 
 /* アコーディオンタイトル */
@@ -141,14 +119,4 @@ h2 {
 
 .plus2 {
   margin-right: 1rem;
-}
-
-.plus2::after {
-  content: "ー";
-  display: block;
-}
-
-.plus2.open::after {
-  content: "＋";
-  display: block;
 }
