@@ -1,0 +1,68 @@
+/* ┌─────────────────────────────────────────┐
+   │ セクション名                        │
+   └─────────────────────────────────────────┘ */
+
+/* トップに大きな画像、下に小さな画像を5つ横に配置する。 */
+.thumbnail_area {
+  padding: 20px 30px 20px 30px;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.thumbnail_main-image {
+}
+
+#mainImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 下の小さな画像をクリックすると、上の大きな画像が切り替わるようにする。 */
+.thumbnail-images {
+  display: flex;
+  justify-content: space-between;
+}
+
+.img {
+  display: block;
+  width: 200px;
+  height: 150px;
+  cursor: pointer;
+  object-fit: contain;
+  min-width: 0;
+}
+
+.thumbnail {
+}
+
+/* --- レイアウト確認用（完成したら消す） --- */
+div,
+section,
+article,
+header,
+footer,
+nav,
+main {
+  outline: 1px solid red !important;
+}
+
+img,
+svg {
+  outline: 1px solid blue !important;
+  background-color: rgba(0, 0, 255, 0.1);
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a,
+li {
+  outline: 1px solid limegreen !important;
+}
