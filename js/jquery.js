@@ -68,7 +68,7 @@ var test1 = $("#test").find(".test1").text();
 
 $(function () {
   acodeTitle = $(".acodeTitle").css({ color: "red", "background-color": "yellow" });
-  alert(acodeTitle.css("color"));
+  // alert(acodeTitle.css("color"));
   var accordionColor = $(".acodeDescription");
 
   // 現在のカラーを確認
