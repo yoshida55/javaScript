@@ -18,7 +18,6 @@
 
 $(function () {
   $(".plus, .plus1, .plus2").text("＋"); // ← これが初期表示
-
   // アコーディオンのタイトルをクリックしたときの処理
   $("#work, #work1, #work2").click(function () {
     var plus = $(this).find(".plus, .plus1, .plus2");
@@ -62,3 +61,21 @@ $(function () {
 //     plusObj2.text("＋");
 //   }
 // });
+
+// ーーーーーーーーーーーーーーーーーーー
+
+var test1 = $("#test").find(".test1").text();
+
+$(function () {
+  acodeTitle = $(".acodeTitle").css({ color: "red", "background-color": "yellow" });
+  alert(acodeTitle.css("color"));
+  var accordionColor = $(".acodeDescription");
+
+  // 現在のカラーを確認
+  console.log(accordionColor.css("color"));
+
+  // もしカラーが青ならば、ブルーにする
+  if (accordionColor.css("color") === "rgb(0, 0, 255)") {
+    accordionColor.css("color", "pink");
+  }
+});

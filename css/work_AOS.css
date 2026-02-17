@@ -3,9 +3,8 @@ body {
   min-height: 200vh; /* 画面2倍の高さ（スクロール可能） */
 }
 
-[data-aos="fade-up"] {
+.AOS {
   background-color: red;
   width: 400px;
   height: 300px;
-  margin: 100vh auto 0; /* 画面1個分下 + 中央 */
 }

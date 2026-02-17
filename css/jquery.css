@@ -69,33 +69,7 @@ h2 {
 /* --------------------------------------- */
 
 /* アコーディオンタイトル */
-#work1 {
-  width: 80%;
-  height: 2rem;
-
-  margin-left: 2rem;
-  background-color: white;
-  border-top: black solid 1px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.accordion-content1 {
-  display: none;
-}
-
-.plus1 {
-  margin-right: 1rem;
-}
-
-.web1 {
-  margin-left: 1rem;
-}
-
-/* --------------------------------------- */
-
-/* アコーディオンタイトル */
+#work1,
 #work2 {
   width: 80%;
   height: 2rem;
@@ -108,15 +82,44 @@ h2 {
   justify-content: space-between;
   align-items: center;
 }
-
+.accordion-content1,
 .accordion-content2 {
   display: none;
 }
 
+.web1,
 .web2 {
   margin-left: 1rem;
 }
-
+.plus1,
 .plus2 {
   margin-right: 1rem;
+}
+
+/* --------------------------------------- */
+
+/* --------------------------------------- */
+
+/* テスト用 */
+#test {
+  width: 80%;
+  height: 2rem;
+  margin-left: 2rem;
+  background-color: lightblue;
+  border-top: black solid 1px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.acodeDescription {
+  font-size: 1.6rem;
+  color: blue;
+}
+
+.acodeTitle,
+.acodeDescription {
+  font-size: 1.6rem;
+  color: red;
 }

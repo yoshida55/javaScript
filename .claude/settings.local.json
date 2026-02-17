@@ -5,7 +5,8 @@
       "WebFetch(domain:xd.adobe.com)",
       "Bash(test -d \"D:\\\\50_knowledge\\\\その他\\\\00_サンプルソース\")",
       "Bash(\"D:\\\\50_knowledge\\\\01_memo.md\":*)",
-      "WebFetch(domain:mizota-ks.com)"
+      "WebFetch(domain:mizota-ks.com)",
+      "Bash(test:*)"
     ]
   }
 }
