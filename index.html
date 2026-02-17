@@ -4,21 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>画像切り替え</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/画像の切替セクション(最新).css" />
   </head>
   <body>
     <section class="thumbnail_area">
       <!-- トップに大きな画像、下に小さな画像を5つ横に配置する。 -->
       <div class="thumbnail_main-image">
-        <img src="img/image1.png" alt="部屋の間取り（サイズ大）" id="mainImage" />
+        <img class="MainImg" src="img/mainvisual1.jpg" alt="部屋の間取り（サイズ大）" id="mainImage" />
       </div>
       <!-- 下の小さな画像をクリックすると、上の大きな画像が切り替わるようにする。 -->
       <div class="thumbnail-images">
-        <img class="img" src="img/image1.png" alt="部屋の間取り（サムネイル1）" class="thumbnail" />
-        <img class="img" src="img/image2.png" alt="部屋の間取り（サムネイル2）" class="thumbnail" />
-        <img class="img" src="img/image3.png" alt="部屋の間取り（サムネイル3）" class="thumbnail" />
-        <img class="img" src="img/image1.png" alt="部屋の間取り（サムネイル4）" class="thumbnail" />
-        <img class="img" src="img/image2.png" alt="部屋の間取り（サムネイル5）" class="thumbnail" />
+        <img class="img" src="img/mainvisual1.jpg" alt="部屋の間取り（サムネイル1）" class="thumbnail" />
+        <img class="img" src="img/mainvisual2.jpg" alt="部屋の間取り（サムネイル2）" class="thumbnail" />
+        <img class="img" src="img/mainvisual3.jpg" alt="部屋の間取り（サムネイル3）" class="thumbnail" />
+        <img class="img" src="img/mainvisual4.jpg" alt="部屋の間取り（サムネイル4）" class="thumbnail" />
+        <img class="img" src="img/mainvisual5.jpg" alt="部屋の間取り（サムネイル5）" class="thumbnail" />
       </div>
       <!-- jQueryを読み込む -->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
