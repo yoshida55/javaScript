@@ -1,30 +1,29 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>画像切り替え</title>
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/画像の切替セクション(最新).css" />
+    <title>画像切り替えセクション</title>
+    <link rel="stylesheet" href="css/画像切り替えセクション_test.css" />
   </head>
   <body>
-    <section class="thumbnail_area">
-      <!-- トップに大きな画像、下に小さな画像を5つ横に配置する。 -->
-      <div class="thumbnail_main-image">
-        <img class="MainImg" src="img/mainvisual1.jpg" alt="部屋の間取り（サイズ大）" id="mainImage" />
+    <main class="gallery_area">
+      <!-- 下段に小さいサイズの複数の画面があり、上に一つのメイン画像がある。 クリックすると切り替え-->
+
+      <!-- メイン画像 -->
+      <img src="img/mainvisual1.jpg" alt="" class="gallery_main" />
+
+      <!-- サムネイル一覧【flex 横5列: サムネイル画像 ×5】 -->
+      <div class="gallery_thumbnails">
+        <img alt="" class="gallery_img" src="img/mainvisual1.jpg" />
+        <img alt="" class="gallery_img" src="img/mainvisual2.jpg" />
+        <img alt="" class="gallery_img" src="img/mainvisual3.jpg" />
+        <img alt="" class="gallery_img" src="img/mainvisual4.jpg" />
+        <img alt="" class="gallery_img" src="img/mainvisual5.jpg" />
       </div>
-      <!-- 下の小さな画像をクリックすると、上の大きな画像が切り替わるようにする。 -->
-      <div class="thumbnail-images">
-        <img class="img" src="img/mainvisual1.jpg" alt="部屋の間取り（サムネイル1）" />
-        <img class="img" src="img/mainvisual2.jpg" alt="部屋の間取り（サムネイル2）" />
-        <img class="img" src="img/mainvisual3.jpg" alt="部屋の間取り（サムネイル3）" />
-        <img class="img" src="img/mainvisual4.jpg" alt="部屋の間取り（サムネイル4）" />
-        <img class="img" src="img/mainvisual5.jpg" alt="部屋の間取り（サムネイル5）" />
-      </div>
-      <!-- jQueryを読み込む -->
+      <!-- jqueryを読み込む -->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script src="js/画像の切替セクション(最新).js"></script>
-    </section>
+      <script src="js/画像切り替えセクション_test2.js"></script>
+    </main>
   </body>
 </html>

@@ -1,0 +1,32 @@
+/* ┌─────────────────────────────────────────┐
+   │ 画像切り替えセクション                  │
+   └─────────────────────────────────────────┘ */
+
+/* 画像切り替えエリア */
+.gallery_area {
+  padding: 5rem 15rem;
+  background-color: white;
+  margin: 0 auto;
+}
+
+/* メイン画像 */
+.gallery_main {
+  width: 100%;
+  height: 70%;
+  margin-bottom: 2rem;
+}
+
+/* サムネイル一覧【flex 横5列: サムネイル画像 ×5】 */
+.gallery_thumbnails {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* └ サムネイル画像 */
+.gallery_img {
+  width: 18%;
+  height: auto;
+  object-fit: cover;
+  cursor: pointer;
+}
